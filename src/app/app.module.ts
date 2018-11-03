@@ -12,6 +12,9 @@ import { LoginComponent } from './views/login/login.component';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
 import {environment} from '../environments/environment';
 import { WelcomeComponent } from './views/welcome/welcome.component';
+import { RegisterComponentComponent } from './views/register/register-component.component';
+import { UserFormComponent } from './users/user-form/user-form.component';
+
 
 
 @NgModule({
@@ -19,7 +22,9 @@ import { WelcomeComponent } from './views/welcome/welcome.component';
     AppComponent,
     LoginComponent,
     DashboardComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    RegisterComponentComponent,
+    UserFormComponent
   ],
   imports: [
     BrowserModule,

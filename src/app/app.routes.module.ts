@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { LoginComponent } from './views/login/login.component';
 import { WelcomeComponent } from './views/welcome/welcome.component';
+import { UserFormComponent } from './users/user-form/user-form.component';
 
 
 const appRoutes: Routes = [
@@ -12,7 +13,11 @@ const appRoutes: Routes = [
   },
   {
     path: 'register',
-    component: LoginComponent
+    component: UserFormComponent
+  },
+  {
+    path: 'welcome',
+    component: WelcomeComponent
   },
   { path: '',   component: WelcomeComponent}
 ];
