@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AppRoutingModule } from './app.routes.module';
 
 import { AppComponent } from './app.component';
@@ -17,6 +18,7 @@ import { UserFormComponent } from './users/user-form/user-form.component';
 
 import { AuthService } from './services/auth.service';
 import { AuthGuardService } from './services/auth-guard.service';
+
 
 @NgModule({
   declarations: [
@@ -34,7 +36,9 @@ import { AuthGuardService } from './services/auth-guard.service';
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase, 'angular-auth-firebase'),
     AngularFireDatabaseModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    AngularFirestoreModule
+
   ],
   providers: [AuthService, AuthGuardService],
   bootstrap: [AppComponent]
