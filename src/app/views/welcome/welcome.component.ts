@@ -1,17 +1,26 @@
-import { Component, ElementRef } from '@angular/core';
-
+import {Component, ElementRef, OnInit} from '@angular/core';
+import { Router } from '@angular/router';
+import {AuthService} from '../../services/auth.service';
 
 
 @Component({
   selector: 'app-welcome',
-  templateUrl: './welcome.component.html',
+  templateUrl: './welcome-component.html',
   styleUrls: ['./welcome.component.css'],
 })
-export class WelcomeComponent {
+export class WelcomeComponent implements OnInit{
+  user = null;
+  constructor(private authService: AuthService, private router: Router) {
+  }
 
-  loginClick = function(){
-    this.router.navigateByUrl('login');
-  };
+  signInWithGoogle() {
+    this.authService.signInWithGoogle()
+      .then((resolve) => this.router.navigate(['dashboard']))
+      .catch((error) => console.log(error));
+  }
+  ngOnInit() {}
 }
+
+
 
 

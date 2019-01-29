@@ -1,0 +1,52 @@
+.header {
+  top: 0;
+  height: 11%;
+}
+.fixed-footer{
+  bottom: 0;
+}
+.header, .fixed-footer{
+  width: 100%;
+  position: fixed;
+  background: #333;
+  padding: 10px 0;
+  color: #fff;
+
+}
+
+/*move to style.css*/
+
+.logo img {
+  height:15% ;
+  width: 15%;
+}
+
+.title {
+  position: absolute;
+  padding-left: 10px;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+
+}
+.container h6 {
+  float: left;
+}
+.container {
+  margin: 0;
+}
+
+.login_page {
+  top: 50%;
+  -webkit-transform: translateY(20%);
+  -ms-transform: translateY(20%);
+  transform: translateY(20%);
+}
+
+.btn {
+  display: block;
+  margin: 0 auto;
+}
+
+

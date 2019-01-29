@@ -9,24 +9,21 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AppRoutingModule } from './app.routes.module';
 
 import { AppComponent } from './app.component';
-import { LoginComponent } from './views/login/login.component';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
 import {environment} from '../environments/environment';
 import { WelcomeComponent } from './views/welcome/welcome.component';
-import { RegisterComponentComponent } from './views/register/register-component.component';
 import { UserFormComponent } from './users/user-form/user-form.component';
 
 import { AuthService } from './services/auth.service';
 import { AuthGuardService } from './services/auth-guard.service';
+import {CarouselModule} from 'angular2-carousel';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
     DashboardComponent,
     WelcomeComponent,
-    RegisterComponentComponent,
     UserFormComponent
   ],
   imports: [
@@ -37,7 +34,8 @@ import { AuthGuardService } from './services/auth-guard.service';
     AngularFireModule.initializeApp(environment.firebase, 'angular-auth-firebase'),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    CarouselModule
 
   ],
   providers: [AuthService, AuthGuardService],

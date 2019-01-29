@@ -17,13 +17,6 @@
                 <li><a>About</a></li>
                 <li><a>Contact</a></li>
               </ul>
-              <ul class="nav navbar-nav navbar-right">
-                <div *ngIf="auth.user | async as user">
-                  <img  [src]="user.photoURL">
-                  <p>{{user.displayName}}</p>
-                <li><a href="" (click)="authService.logout()">Logout</a></li>
-                </div>
-              </ul>
               
             </div><!--/.nav-collapse -->
           </div><!--/.container-fluid -->
@@ -32,9 +25,14 @@
         <!-- Main component for a primary marketing message or call to action -->
         <div class="jumbotron ">
         <div *ngIf="auth.user | async as user">
+          <div id = "user-profile">
+            <img  [src]="user.photoURL">
+            <p>{{user.displayName}}</p>
+            <a href="" (click)="authService.logout()">Logout</a>
+          </div>
           <h3>Welcome to Stock-ify {{user.displayName}}</h3>
         </div>
             <p>add details about inventory database here</p>
         </div>
-      
+
       </div> <!-- /container -->
