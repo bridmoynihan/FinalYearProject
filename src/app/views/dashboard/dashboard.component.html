@@ -1,38 +1,89 @@
-<div class="container">
-
-        <!-- Static navbar -->
-        <nav class="navbar navbar-default">
-          <div class="container-fluid">
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-            </div>
-            <div id="navbar" class="navbar-collapse collapse">
-              <ul class="nav navbar-nav">
-                <li class="active"><a>Home</a></li>
-                <li><a>About</a></li>
-                <li><a>Contact</a></li>
-              </ul>
-              
-            </div><!--/.nav-collapse -->
-          </div><!--/.container-fluid -->
-        </nav>
-      
-        <!-- Main component for a primary marketing message or call to action -->
-        <div class="jumbotron ">
+<div class="header">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">Stock-ify</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Inventory Management</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Waste Calculator</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Analytics</a>
+      </li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li class="nav-item dropdown">
         <div *ngIf="auth.user | async as user">
-          <div id = "user-profile">
-            <img  [src]="user.photoURL">
-            <p>{{user.displayName}}</p>
-            <a href="" (click)="authService.logout()">Logout</a>
-          </div>
-          <h3>Welcome to Stock-ify {{user.displayName}}</h3>
+        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+          <i class="fa fa-user" aria-hidden="true"></i> 
+          <a>Account</a>
+          <span class="glyphicon glyphicon-chevron-down"></span>
+        </a>
+        <ul class="dropdown-menu">
+          <li>
+            <div class="navbar-login">
+              <div class="row">
+                <div class="col-lg-4">
+                  <p class="text-center">
+                    <span class=""><img [src]="user.photoURL"></span>
+                  </p>
+                </div>
+                <div class="col-lg-8">
+                  <p class="text-left"><strong>{{user.displayName}}</strong></p>
+                  <p class="text-left small">{{user.email}}</p>
+                  <p class="text-left">
+                    <!--<button type="button" class="btn-dark" onclick="authService.logout()"><i class="fa fa-google" aria-hidden="true"> Logout</i></button>-->
+                    <button><a href="" (click)="authService.logout()"> Logout</a></button>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
         </div>
-            <p>add details about inventory database here</p>
-        </div>
+      </li>
+    </ul>
+  </div>
 
-      </div> <!-- /container -->
+</nav>
+  <div class="card">
+    <div class="card-header">
+      <div class="card-body">
+        <h5 class="card-title">Special title treatment</h5>
+        <h3>Welcome to Stock-ify</h3>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">Check if user has existing content</h1>
+    <p class="lead">If content exist display inventory else create first database</p>
+  </div>
+</div>
+<div class="fixed-footer">
+  <!-- Footer -->
+  <footer class="page-footer font-small unique-color-dark pt-4">
+
+    <!-- Footer Elements -->
+    <div class="container">
+    </div>
+    <!-- Footer Elements -->
+
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-3">© 2019 Copyright:
+      Stock-ify UCC Final Year Project
+    </div>
+    <!-- Copyright -->
+
+  </footer>
+  <!-- Footer -->
+</div>
