@@ -5,32 +5,40 @@ import { HttpModule } from '@angular/http';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
-import { AppRoutingModule } from "./app.routes.module";
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AppRoutingModule } from './app.routes.module';
 
 import { AppComponent } from './app.component';
-import { LoginComponent } from './views/login/login.component';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
 import {environment} from '../environments/environment';
 import { WelcomeComponent } from './views/welcome/welcome.component';
+import { UserFormComponent } from './users/user-form/user-form.component';
+
+import { AuthService } from './services/auth.service';
+import { AuthGuardService } from './services/auth-guard.service';
+import {CarouselModule} from 'angular2-carousel';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
     DashboardComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    UserFormComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
     AppRoutingModule,
-    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireModule.initializeApp(environment.firebase, 'angular-auth-firebase'),
     AngularFireDatabaseModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    AngularFirestoreModule,
+    CarouselModule
+
   ],
-  providers: [],
+  providers: [AuthService, AuthGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

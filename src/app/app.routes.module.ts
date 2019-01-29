@@ -1,20 +1,22 @@
-import { NgModule }             from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { LoginComponent } from './views/login/login.component';
 import { WelcomeComponent } from './views/welcome/welcome.component';
+import { DashboardComponent } from './views/dashboard/dashboard.component';
 
+import {AuthGuardService} from './services/auth-guard.service';
 
 const appRoutes: Routes = [
   {
-    path: 'login',
-    component: LoginComponent
+    path: 'welcome',
+    component: WelcomeComponent
   },
+  { path: '',   component: WelcomeComponent},
   {
-    path: 'register',
-    component: LoginComponent
-  },
-  { path: '',   component: WelcomeComponent}
+    path: 'dashboard',
+    canActivate: [AuthGuardService],
+    component: DashboardComponent
+  }
 ];
 
 @NgModule({
