@@ -26,7 +26,17 @@
   width: 100%;
   display: flex;
   justify-content: center;
+  color: white!important;
 }
+
+.btn-primary {
+  cursor: pointer;
+}
+
+.footer-copyright {
+  color: white!important;
+}
+
 /*.header, .fixed-footer{*/
   /*width: 100%;*/
   /*position: fixed;*/
