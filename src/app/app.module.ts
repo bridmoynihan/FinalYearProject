@@ -16,7 +16,10 @@ import { UserFormComponent } from './users/user-form/user-form.component';
 
 import { AuthService } from './services/auth.service';
 import { AuthGuardService } from './services/auth-guard.service';
-import {CarouselModule} from 'angular2-carousel';
+
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import {BsDropdownModule} from 'ngx-bootstrap';
 
 
 @NgModule({
@@ -35,7 +38,9 @@ import {CarouselModule} from 'angular2-carousel';
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     AngularFirestoreModule,
-    CarouselModule
+    BsDropdownModule.forRoot(),
+    TooltipModule.forRoot(),
+    ModalModule.forRoot()
 
   ],
   providers: [AuthService, AuthGuardService],
