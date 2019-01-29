@@ -1,9 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 @import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 @import "~font-awesome/css/font-awesome.css";
-@import url('https://unpkg.com/bootstrap@3.3.7/dist/css/bootstrap.min.css');
+@import '~bootstrap/dist/css/bootstrap.min.css';
 
 html {
+  max-height: 100%;
   background: url('assets/images/cooking.jpg') no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
