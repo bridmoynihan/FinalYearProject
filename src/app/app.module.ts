@@ -20,7 +20,7 @@ import { AuthGuardService } from './services/auth-guard.service';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import {BsDropdownModule} from 'ngx-bootstrap';
-
+import {InventoryService} from './services/inventory.service';
 
 @NgModule({
   declarations: [
@@ -43,7 +43,7 @@ import {BsDropdownModule} from 'ngx-bootstrap';
     ModalModule.forRoot()
 
   ],
-  providers: [AuthService, AuthGuardService],
+  providers: [AuthService, AuthGuardService, InventoryService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
