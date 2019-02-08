@@ -10,7 +10,7 @@ import {AuthService} from '../../services/auth.service';
 })
 export class WelcomeComponent implements OnInit{
   user = null;
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private router: Router, private authService: AuthService) {
   }
 
   signInWithGoogle() {
@@ -18,7 +18,8 @@ export class WelcomeComponent implements OnInit{
       .then((resolve) => this.router.navigate(['dashboard']))
       .catch((error) => console.log(error));
   }
-  ngOnInit() {}
+  ngOnInit() {
+  }
 }
 
 

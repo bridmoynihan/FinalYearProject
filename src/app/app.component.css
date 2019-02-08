@@ -1,0 +1,15 @@
+.page-footer{
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: #343A40;
+}
+
+.btn-primary {
+  cursor: pointer;
+}
+
+.footer-copyright {
+  color: white!important;
+}

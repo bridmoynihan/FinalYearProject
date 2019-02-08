@@ -2,6 +2,26 @@
   /*top: 0;*/
   /*height: 11%;*/
 /*}*/
+.jumbotron {
+  padding-right: 0px;
+  padding-top: 0px;
+  padding-left: 0px;
+  padding-bottom: 0px;
+  width: 500px!important;
+  top: 184px;
+  right: 0px;
+  left: 674px;
+  position: fixed;
+/*background: #000 url("../../../assets/images/cooking.jpg") center center;*/
+  top: 0;
+  left: 0;
+  /*min-width: 100%;*/
+  /*min-height: 100%;*/
+}
+
+body {
+  margin: 0;
+}
 .page-footer{
   position: absolute;
   bottom: 0;
