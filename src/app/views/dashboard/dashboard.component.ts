@@ -20,4 +20,8 @@ export class DashboardComponent implements OnInit {
     this.router.navigateByUrl('/welcome');
   }
 
+  createInventory(){
+    this.inventory.createInventoryList();
+  }
+
 }

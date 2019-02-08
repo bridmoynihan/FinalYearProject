@@ -5,9 +5,10 @@ import { AngularFireObject, AngularFireList } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import {Observable} from 'rxjs';
 import {first} from 'rxjs/operators';
+import {firestore} from 'firebase';
+import {map} from 'rxjs/operators';
 
 interface Inventory {
-  name: string;
   uid: string;
 }
 
@@ -16,10 +17,14 @@ export class InventoryService {
   inventoryTrue = false;
   inventory: AngularFirestoreCollection<Inventory> = null;
   uid: string;
-  constructor(private db: AngularFirestore, private afAuth: AngularFireAuth){
+  item_barcode: '101011';
+
+  constructor(private db: AngularFirestore, private afAuth: AngularFireAuth) {
     this.afAuth.authState.subscribe(
       user => {
-        if(user) { this.uid = user.uid }
+        if (user) {
+          this.uid = user.uid
+        }
       }
     )
     setTimeout(() => {
@@ -27,46 +32,38 @@ export class InventoryService {
     }, 5000);
   }
 
-  // createInventoryList(): AngularFirestoreCollection<Inventory> {
-  //   const inventory = this.db.collection('inventory')
-  //   if (!this.uid) {
-  //     return;
-  //   }
-  //   inventory.doc(this.uid).set({
-  //     name: 'inventory name',
-  //     uid: this.uid
-  //   })
-  // }
+  createInventoryList(): AngularFirestoreCollection<Inventory> {
+    this.item_barcode = '101011';
+    const inventoryRef = this.db.collection('inventory').doc(this.uid).collection('items').doc(this.item_barcode).set({
+        item_name: '',
+        location_barcode: '',
+        location: '',
+        quantity: '',
+        quality: '',
+        expiry_date: firestore.Timestamp.fromDate(new Date('08/02/19')),
+        status: true
+      })
+    ;
+    return;
+  }
 
   // displayInventoryList(): AngularFirestoreCollection<Inventory[]> {
-  //   if(!this.uid){
-  //     return;
-  //   }
-  //   this.inventory = this.db.collection('inventory');
-  //   this.inventoryData = thi
-  //
   // }
 
   inventoryExists() {
-    if(this.db.doc('inventory/' + this.uid ).valueChanges().pipe(first()).toPromise()) {
-      console.log('true');
-      this.inventoryTrue = true;
-      return;
-    }
+    const ref: AngularFirestoreDocument = this.db.doc('/inventory/' + this.uid);
+    ref.valueChanges().subscribe(action => {
+      if(action){
+        this.inventoryTrue = true;
+        console.log('false');
+        return;
+      } else{
+        this.inventoryTrue = false;
+        console.log('true');
+        return;
+      }
+    });
+    console.log(this.inventoryTrue)
 
-  // const ref: AngularFirestoreDocument<any> = this.db.doc('inventory/' + uid);
-  // ref.get().subscribe(snap => {
-  //   if(snap.exists){
-  //     console.log('exists');
-  //     return true;
-  //   }
-  //   else {
-  //     console.log('doesnt exist');
-  //     return false;
-  //   }
-  // })
   }
-
-
-
 }

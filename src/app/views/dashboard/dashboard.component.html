@@ -68,7 +68,7 @@
     <p class="lead">If content exist display inventory else create first database</p>
       <div *ngIf="!inventoryTrue">
         <p>We've noticed you haven't created an inventory yet. Click here to create your first inventory system!</p>
-        <button type="button" class="btn btn-dark" (click)="inventoryButtonClick()">Inventory</button>
+        <button type="button" class="btn btn-dark" (click)="createInventory()">Inventory</button>
       </div>
       <!--<div *ngIf="!inventory.inventoryExists(user.uid)">-->
         <!--<p>inventory doesn't exists</p>-->

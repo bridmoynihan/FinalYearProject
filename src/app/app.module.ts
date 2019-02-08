@@ -21,6 +21,10 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import {BsDropdownModule} from 'ngx-bootstrap';
 import {InventoryService} from './services/inventory.service';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import 'hammerjs';
+import {FlexLayoutModule} from '@angular/flex-layout';
+import {MaterialModule} from './material.module'
 
 @NgModule({
   declarations: [
@@ -40,7 +44,10 @@ import {InventoryService} from './services/inventory.service';
     AngularFirestoreModule,
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    MaterialModule,
+    BrowserAnimationsModule,
+    FlexLayoutModule
 
   ],
   providers: [AuthService, AuthGuardService, InventoryService],
