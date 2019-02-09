@@ -41,7 +41,7 @@
                   <p class="text-left small">{{user.email}}</p>
                   <p class="text-left">
                     <!--<button type="button" class="btn-dark" onclick="authService.logout()"><i class="fa fa-google" aria-hidden="true"> Logout</i></button>-->
-                    <button><a href="" (click)="authService.logout()"> Logout</a></button>
+                    <a href="" (click)="authService.logout()"> Logout</a>
                   </p>
                 </div>
               </div>
@@ -59,7 +59,6 @@
       <div class="card-body">
         <h5 class="card-title">Special title treatment</h5>
         <h3>Welcome to Stock-ify</h3>
-      </div>
     </div>
   </div>
 </div>
@@ -67,23 +66,29 @@
   <div class="container">
     <h1 class="display-4">Check if user has existing content</h1>
     <p class="lead">If content exist display inventory else create first database</p>
+      <div *ngIf="!inventoryTrue">
+        <p>We've noticed you haven't created an inventory yet. Click here to create your first inventory system!</p>
+        <button type="button" class="btn btn-dark" (click)="createInventory()">Inventory</button>
+      </div>
+
+  </div>
   </div>
 </div>
-<div class="fixed-footer">
-  <!-- Footer -->
-  <footer class="page-footer font-small unique-color-dark pt-4">
+<!--<div class="fixed-footer">-->
+  <!--&lt;!&ndash; Footer &ndash;&gt;-->
+  <!--<footer class="page-footer font-small unique-color-dark pt-4">-->
 
-    <!-- Footer Elements -->
-    <div class="container">
-    </div>
-    <!-- Footer Elements -->
+    <!--&lt;!&ndash; Footer Elements &ndash;&gt;-->
+    <!--<div class="container">-->
+    <!--</div>-->
+    <!--&lt;!&ndash; Footer Elements &ndash;&gt;-->
 
-    <!-- Copyright -->
-    <div class="footer-copyright text-center py-3">© 2019 Copyright:
-      Stock-ify UCC Final Year Project
-    </div>
-    <!-- Copyright -->
+    <!--&lt;!&ndash; Copyright &ndash;&gt;-->
+    <!--<div class="footer-copyright text-center py-3">© 2019 Copyright:-->
+      <!--Stock-ify UCC Final Year Project-->
+    <!--</div>-->
+    <!--&lt;!&ndash; Copyright &ndash;&gt;-->
 
-  </footer>
-  <!-- Footer -->
-</div>
+  <!--</footer>-->
+  <!--&lt;!&ndash; Footer &ndash;&gt;-->
+<!--</div>-->

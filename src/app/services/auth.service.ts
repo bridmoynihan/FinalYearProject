@@ -39,7 +39,7 @@ export class AuthService {
   )
   }
   signInWithGoogle() {
-    const provider = new auth.GoogleAuthProvider()
+    const provider = new auth.GoogleAuthProvider();
     return this.oAuthLogin(provider);
   }
 private oAuthLogin(provider) {

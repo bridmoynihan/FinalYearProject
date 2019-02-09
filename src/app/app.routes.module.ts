@@ -11,7 +11,7 @@ const appRoutes: Routes = [
     path: 'welcome',
     component: WelcomeComponent
   },
-  { path: '',   component: WelcomeComponent},
+  // { path: '', redirectTo: 'welcome', pathMatch: 'full' },
   {
     path: 'dashboard',
     canActivate: [AuthGuardService],
