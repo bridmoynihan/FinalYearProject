@@ -1,5 +1,5 @@
 import { Router } from '@angular/router';
-import { Injectable } from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection} from '@angular/fire/firestore';
 import { AngularFireObject, AngularFireList } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -8,28 +8,29 @@ import {first} from 'rxjs/operators';
 import {firestore} from 'firebase';
 import {map} from 'rxjs/operators';
 
+
 interface Inventory {
   uid: string;
 }
 
 @Injectable()
-export class InventoryService {
-  inventoryTrue = false;
+export class InventoryService implements OnInit {
   inventory: AngularFirestoreCollection<Inventory> = null;
   uid: string;
-  item_barcode: '101011';
+  item_barcode: '101011'; // retrieve value from form
 
   constructor(private db: AngularFirestore, private afAuth: AngularFireAuth) {
+    this.item_barcode = '101011';
+
     this.afAuth.authState.subscribe(
       user => {
         if (user) {
-          this.uid = user.uid
+          this.uid = user.uid;
+          console.log(this.uid);
+          return this.uid;
         }
       }
-    )
-    setTimeout(() => {
-      this.inventoryExists();
-    }, 5000);
+    );
   }
 
   createInventoryList(): AngularFirestoreCollection<Inventory> {
@@ -50,20 +51,23 @@ export class InventoryService {
   // displayInventoryList(): AngularFirestoreCollection<Inventory[]> {
   // }
 
-  inventoryExists() {
-    const ref: AngularFirestoreDocument = this.db.doc('/inventory/' + this.uid);
-    ref.valueChanges().subscribe(action => {
-      if(action){
-        this.inventoryTrue = true;
-        console.log('false');
-        return;
-      } else{
-        this.inventoryTrue = false;
-        console.log('true');
-        return;
+  inventoryExists(): any {
+    this.item_barcode = '101011'; // read in barcode value from form on inventory creation page
+
+    const docRef = this.db.collection('inventory').doc('veWj2VNOz5RFoX1lGl4TWEQaXGq1').collection('items').doc(this.item_barcode)
+
+    return docRef.ref.get().then(doc => {
+        if (doc.exists) {
+          return true;
+        } else {
+          return false;
+        }
       }
+    ).catch(function(error) {
+      console.log('Error getting document: ', error);
     });
-    console.log(this.inventoryTrue)
+  }
+  ngOnInit(): any {
 
   }
 }

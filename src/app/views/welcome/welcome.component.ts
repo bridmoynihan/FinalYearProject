@@ -18,6 +18,7 @@ export class WelcomeComponent implements OnInit{
       .then((resolve) => this.router.navigate(['dashboard']))
       .catch((error) => console.log(error));
   }
+
   ngOnInit() {
   }
 }

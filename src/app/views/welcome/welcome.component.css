@@ -57,14 +57,15 @@ body {
   color: white!important;
 }
 
-/*.header, .fixed-footer{*/
-  /*width: 100%;*/
-  /*position: fixed;*/
-  /*background: #333;*/
-  /*padding: 10px 0;*/
-  /*color: #fff;*/
+.header, .fixed-footer{
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  background: #343A40;
+  padding: 10px 0;
+  color: #fff;
 
-/*}*/
+}
 
 /*!*move to style.css*!*/
 

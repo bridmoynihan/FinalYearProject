@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../../services/auth.service';
 import {InventoryService} from '../../services/inventory.service';
 import {Router} from '@angular/router';
+import { AngularFirestore} from '@angular/fire/firestore';
 
 
 @Component({
@@ -10,8 +11,14 @@ import {Router} from '@angular/router';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+  inventoryTrue: boolean;
 
-  constructor(public auth: AuthService, public inventory: InventoryService, private router: Router) { }
+  constructor(private db: AngularFirestore, public auth: AuthService, public inventory: InventoryService, private router: Router) {
+    this.inventoryTrue = this.inventory.inventoryExists().then(val => {
+      this.inventoryTrue = val;
+      return this.inventoryTrue;
+    });
+  }
 
   ngOnInit() {
   }
@@ -23,5 +30,8 @@ export class DashboardComponent implements OnInit {
   createInventory(){
     this.inventory.createInventoryList();
   }
+
+
+
 
 }
