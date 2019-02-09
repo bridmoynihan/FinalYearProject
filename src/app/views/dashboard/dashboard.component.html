@@ -1,59 +1,5 @@
+<app-navbar></app-navbar>
 <div class="header">
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">Stock-ify</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Inventory Management</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Waste Calculator</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Analytics</a>
-      </li>
-    </ul>
-    <ul class="nav navbar-nav navbar-right">
-      <li class="nav-item dropdown">
-        <div *ngIf="auth.user | async as user">
-        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-          <i class="fa fa-user" aria-hidden="true"></i> 
-          <a>Account</a>
-          <span class="glyphicon glyphicon-chevron-down"></span>
-        </a>
-        <ul class="dropdown-menu">
-          <li>
-            <div class="navbar-login">
-              <div class="row">
-                <div class="col-lg-4">
-                  <p class="text-center">
-                    <span class=""><img [src]="user.photoURL"></span>
-                  </p>
-                </div>
-                <div class="col-lg-8">
-                  <p class="text-left"><strong>{{user.displayName}}</strong></p>
-                  <p class="text-left small">{{user.email}}</p>
-                  <p class="text-left">
-                    <!--<button type="button" class="btn-dark" onclick="authService.logout()"><i class="fa fa-google" aria-hidden="true"> Logout</i></button>-->
-                    <a href="" (click)="authService.logout()"> Logout</a>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </li>
-        </ul>
-        </div>
-      </li>
-    </ul>
-  </div>
-
-</nav>
   <div class="card">
     <div class="card-header">
       <div class="card-body">
@@ -64,31 +10,11 @@
 </div>
 <div class="jumbotron jumbotron-fluid">
   <div class="container">
-    <h1 class="display-4">Check if user has existing content</h1>
-    <p class="lead">If content exist display inventory else create first database</p>
+    <h1 class="display-4">We've noticed you haven't created an inventory yet.</h1>
+    <p class="lead">Click here to create your first inventory system!</p>
       <div *ngIf="!inventoryTrue">
-        <p>We've noticed you haven't created an inventory yet. Click here to create your first inventory system!</p>
-        <button type="button" class="btn btn-dark" (click)="createInventory()">Inventory</button>
+        <button type="button" class="btn btn-dark" (click)="createInventory()">Inventory Management</button>
       </div>
-
   </div>
   </div>
 </div>
-<!--<div class="fixed-footer">-->
-  <!--&lt;!&ndash; Footer &ndash;&gt;-->
-  <!--<footer class="page-footer font-small unique-color-dark pt-4">-->
-
-    <!--&lt;!&ndash; Footer Elements &ndash;&gt;-->
-    <!--<div class="container">-->
-    <!--</div>-->
-    <!--&lt;!&ndash; Footer Elements &ndash;&gt;-->
-
-    <!--&lt;!&ndash; Copyright &ndash;&gt;-->
-    <!--<div class="footer-copyright text-center py-3">© 2019 Copyright:-->
-      <!--Stock-ify UCC Final Year Project-->
-    <!--</div>-->
-    <!--&lt;!&ndash; Copyright &ndash;&gt;-->
-
-  <!--</footer>-->
-  <!--&lt;!&ndash; Footer &ndash;&gt;-->
-<!--</div>-->

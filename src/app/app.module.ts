@@ -13,6 +13,7 @@ import { DashboardComponent } from './views/dashboard/dashboard.component';
 import {environment} from '../environments/environment';
 import { WelcomeComponent } from './views/welcome/welcome.component';
 import { UserFormComponent } from './users/user-form/user-form.component';
+import {NavbarComponent} from './views/navbar/navbar.component';
 
 import { AuthService } from './services/auth.service';
 import { AuthGuardService } from './services/auth-guard.service';
@@ -31,7 +32,8 @@ import {MaterialModule} from './material.module'
     AppComponent,
     DashboardComponent,
     WelcomeComponent,
-    UserFormComponent
+    UserFormComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,

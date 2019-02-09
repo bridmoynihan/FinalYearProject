@@ -26,7 +26,6 @@ export class InventoryService implements OnInit {
       user => {
         if (user) {
           this.uid = user.uid;
-          console.log(this.uid);
           return this.uid;
         }
       }
