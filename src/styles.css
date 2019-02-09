@@ -4,12 +4,12 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
 
 html {
-  max-height: 100%;
-  background: url('assets/images/cooking.jpg') no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+  /*max-height: 100%;*/
+  /*background: url('assets/images/cooking.jpg') no-repeat center center fixed;*/
+  /*-webkit-background-size: cover;*/
+  /*-moz-background-size: cover;*/
+  /*-o-background-size: cover;*/
+  /*background-size: cover;*/
 }
 
 * {

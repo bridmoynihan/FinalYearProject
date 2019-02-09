@@ -3,6 +3,7 @@ import {AuthService} from '../../services/auth.service';
 import {InventoryService} from '../../services/inventory.service';
 import {Router} from '@angular/router';
 import { AngularFirestore} from '@angular/fire/firestore';
+import {NavbarComponent} from '../navbar/navbar.component';
 
 
 @Component({
