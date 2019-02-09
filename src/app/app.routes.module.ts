@@ -5,6 +5,7 @@ import { WelcomeComponent } from './views/welcome/welcome.component';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
 
 import {AuthGuardService} from './services/auth-guard.service';
+import {InventoryFormComponent} from './views/inventoryView/inventory-form/inventory-form.component';
 
 const appRoutes: Routes = [
   {
@@ -16,6 +17,11 @@ const appRoutes: Routes = [
     path: 'dashboard',
     canActivate: [AuthGuardService],
     component: DashboardComponent
+  },
+  {
+    path: 'inventory',
+    canActivate: [AuthGuardService],
+    component: InventoryFormComponent
   }
 ];
 

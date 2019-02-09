@@ -10,11 +10,14 @@
 </div>
 <div class="jumbotron jumbotron-fluid">
   <div class="container">
+    <div *ngIf="!inventoryTrue">
     <h1 class="display-4">We've noticed you haven't created an inventory yet.</h1>
     <p class="lead">Click here to create your first inventory system!</p>
-      <div *ngIf="!inventoryTrue">
-        <button type="button" class="btn btn-dark" (click)="createInventory()">Inventory Management</button>
+        <button type="button" class="btn btn-dark" (click)="inventoryButtonClick()">Inventory Management</button>
       </div>
+    <div *ngIf="inventoryTrue">
+      <h1 class="display-4">display content of inventory here</h1>
+      <p class="lead">HERE</p>
   </div>
   </div>
 </div>

@@ -25,7 +25,7 @@ export class DashboardComponent implements OnInit {
   }
 
   inventoryButtonClick(){
-    this.router.navigateByUrl('/welcome');
+    this.router.navigateByUrl('/inventory');
   }
 
   createInventory(){
