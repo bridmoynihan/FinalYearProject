@@ -16,20 +16,22 @@ export class DashboardComponent implements OnInit {
 
   constructor(private db: AngularFirestore, public auth: AuthService, public inventory: InventoryService, private router: Router) {
     this.inventoryTrue = this.inventory.inventoryExists().then(val => {
-      this.inventoryTrue = val;
-      return this.inventoryTrue;
-    });
+      this.inventoryTrue = val
+      console.log("result: " + val)
+      // return this.inventoryTrue
+     });
+     console.log("inventoryTrue " + this.inventoryTrue)
+    // this.inventoryTrue = this.inventory.(this.inventoryExistsifc.itemBarcode).then(val => {
+    //   this.inventoryTrue = val;
+    //   return this.inventoryTrue;
+    // });
   }
 
   ngOnInit() {
   }
 
   inventoryButtonClick(){
-    this.router.navigateByUrl('/welcome');
-  }
-
-  createInventory(){
-    this.inventory.createInventoryList();
+    this.router.navigateByUrl('/inventory');
   }
 
 

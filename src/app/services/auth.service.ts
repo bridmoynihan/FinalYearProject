@@ -31,7 +31,7 @@ export class AuthService {
   this.user = this._firebaseAuth.authState.pipe(
     switchMap(user => {
       if (user) {
-        return this._angularFirestore.doc<User>('users/${user.uid}').valueChanges()
+        return this._angularFirestore.doc<User>('users/' + user.uid).valueChanges()
       } else {
         return of(null)
       }
@@ -53,7 +53,7 @@ private oAuthLogin(provider) {
   }
 
   private updateUserDetails(user){
-    const userRef: AngularFirestoreDocument<any> =  this._angularFirestore.doc('users/${user.uid}');
+    const userRef: AngularFirestoreDocument<any> =  this._angularFirestore.doc('users/' + user.uid);
 
     const details: User = {
       uid: user.uid,

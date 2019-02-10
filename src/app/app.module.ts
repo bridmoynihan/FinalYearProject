@@ -25,7 +25,8 @@ import {InventoryService} from './services/inventory.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import 'hammerjs';
 import {FlexLayoutModule} from '@angular/flex-layout';
-import {MaterialModule} from './material.module'
+import { InventoryFormComponent } from './views/inventoryView/inventory-form/inventory-form.component';
+
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import {MaterialModule} from './material.module'
     DashboardComponent,
     WelcomeComponent,
     UserFormComponent,
-    NavbarComponent
+    NavbarComponent,
+    InventoryFormComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +49,6 @@ import {MaterialModule} from './material.module'
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
-    MaterialModule,
     BrowserAnimationsModule,
     FlexLayoutModule
 
