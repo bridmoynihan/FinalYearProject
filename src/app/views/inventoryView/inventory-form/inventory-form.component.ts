@@ -32,7 +32,6 @@ export class InventoryFormComponent implements OnInit {
     if(this.itemBarcode && this.itemName && this.expiryDate){
       this.validForm = true;
       this.quality = 'Good'
-      console.log(String(this.location));
       // add promise here to check if success or fail to handle error alert for user
       this.inventoryService.addInventoryItem(this.itemBarcode, this.itemName, this.expiryDate, this.entryDate, this.quality, String(this.location), String(this.locationBarcode), String(this.vendor), String(this.quantity), String(this.qntType), String(this.cost));
       return this.validForm;

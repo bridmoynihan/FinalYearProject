@@ -15,16 +15,12 @@ export class DashboardComponent implements OnInit {
   inventoryTrue: boolean;
 
   constructor(private db: AngularFirestore, public auth: AuthService, public inventory: InventoryService, private router: Router) {
-    this.inventoryTrue = this.inventory.inventoryExists().then(val => {
-      this.inventoryTrue = val
-      console.log("result: " + val)
-      // return this.inventoryTrue
-     });
-     console.log("inventoryTrue " + this.inventoryTrue)
-    // this.inventoryTrue = this.inventory.(this.inventoryExistsifc.itemBarcode).then(val => {
-    //   this.inventoryTrue = val;
-    //   return this.inventoryTrue;
-    // });
+    // TODO add this inventory exist check to a new component within inventory management replace with a button that directs
+    // this.inventoryTrue = this.inventory.inventoryExists().then(val => {
+    //   this.inventoryTrue = val
+    //   console.log("result: " + val)
+    this.inventoryTrue = false;
+    //  });
   }
 
   ngOnInit() {
@@ -33,6 +29,9 @@ export class DashboardComponent implements OnInit {
   inventoryButtonClick(){
     this.router.navigateByUrl('/inventory');
   }
+  // displayInventoryList(){
+  //   this.inventory.displayInventoryList();
+  // }
 
 
 

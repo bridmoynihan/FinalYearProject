@@ -21,36 +21,45 @@ export class InventoryService implements OnInit {
 
   constructor(private db: AngularFirestore, private afAuth: AngularFireAuth) {
     this.item_barcode = '101011';
+    this.afAuth.authState.subscribe(
+      user => {
+        if (user) {
+          this.uid = user.uid;
+          return user.uid;
+        }
+      }
+    );
   }
 
-  // createInventoryList(): AngularFirestoreCollection<Inventory> {
-  //   this.item_barcode = '101011';
-  //   const inventoryRef = this.db.collection('inventory').doc(this.uid).collection(this.item_barcode).doc('details' + this.item_barcode).set({
-  //       item_name: '',
-  //       location_barcode: '',
-  //       location: '',
-  //       quantity: '',
-  //       quality: '',
-  //       expiry_date: firestore.Timestamp.fromDate(new Date('08/02/19')),
-  //       status: true
-  //     })
-  //   ;
-  //   return;
-  // }
+  displayInventoryList(): AngularFirestoreCollection<Inventory[]> {
+   const docRef = this.db.collection('inventory').doc(this.uid)
+   docRef.ref.get().then(doc => {
+     console.log(Object.keys(doc.data()))
+   })
+   return;
+  }
 
-  // displayInventoryList(): AngularFirestoreCollection<Inventory[]> {
-  // }
+  createInventory(barcode, entryDate){
+    const docRef = this.db.collection('inventory' + this.uid).doc(barcode)
+    docRef.set({creationDate: entryDate}, { merge: true }).then(function() {
+      console.log("Inventory Successfully created");
+    })
+    .catch(function(error) {
+      console.error("Error writing document: ", error);
+    });;;
+  }
 
-  inventoryExists(): any {
+  inventoryExists(barcode): any {
     return this.getUID().then(result => {
       this.uid = String(result)
       console.log(this.uid);
-      const docRef = this.db.collection('inventory').doc(this.uid)
+      const docRef = this.db.collection('inventory' + this.uid).doc(barcode)
 
       return docRef.ref.get().then(doc => {
           if (doc.exists) {
             return true;
           } else {
+            console.log('doc doesnt exist')
             return false;
           }
         }
@@ -61,11 +70,17 @@ export class InventoryService implements OnInit {
   }
 
   addInventoryItem(barcode, name, expiry, entryDate, quality, location?, locationbarcode?, vendor?, quantity?, qntType?, cost?): any {
-    console.log(this.uid);
-    console.log(barcode);
-    console.log(name);
-    const docRef = this.db.collection('inventory').doc(this.uid).collection(barcode).doc('details' + barcode)
-    docRef.set({
+    var isExists: boolean;
+    this.inventoryExists(barcode).then(result => {
+      isExists = result;
+      console.log('is exists: ' + isExists)
+    });
+    if(!isExists){
+      this.createInventory(barcode, entryDate);
+      console.log('created inventory')
+    }
+    const subDocRef = this.db.collection('inventory' + this.uid).doc(barcode)
+    subDocRef.set({
       itemName: name,
       expiryDate: expiry,
       entryDate: entryDate,
