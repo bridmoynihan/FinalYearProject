@@ -50,10 +50,10 @@ export class InventoryService implements OnInit {
   // displayInventoryList(): AngularFirestoreCollection<Inventory[]> {
   // }
 
-  inventoryExists(): any {
+  inventoryExists(itemBarcode): any {
     this.item_barcode = '101011'; // read in barcode value from form on inventory creation page
 
-    const docRef = this.db.collection('inventory').doc('veWj2VNOz5RFoX1lGl4TWEQaXGq1').collection('items').doc(this.item_barcode)
+    const docRef = this.db.collection('inventory').doc(this.uid).collection('items').doc(itemBarcode)
 
     return docRef.ref.get().then(doc => {
         if (doc.exists) {
@@ -66,6 +66,34 @@ export class InventoryService implements OnInit {
       console.log('Error getting document: ', error);
     });
   }
+
+  addInventoryItem(barcode, name, expiry, entryDate, quality, location?, locationbarcode?, vendor?, quantity?, qntType?, cost?): any {
+    console.log(this.uid);
+    console.log(barcode);
+    console.log(name);
+
+    const docRef = this.db.collection('inventory').doc(this.uid).collection('items').doc(barcode)
+    docRef.set({
+      itemName: name,
+      expiryDate: expiry,
+      entryDate: entryDate,
+      quality: quality,
+      location: location,
+      locationBarcode: locationbarcode,
+      vendor: vendor,
+      quantity: quantity,
+      qntType: qntType,
+      cost: cost
+
+    }, { merge: true })
+    .then(function() {
+      console.log("Document successfully written!");
+    })
+    .catch(function(error) {
+      console.error("Error writing document: ", error);
+    });;
+  }
+
   ngOnInit(): any {
 
   }

@@ -25,7 +25,6 @@ import {InventoryService} from './services/inventory.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import 'hammerjs';
 import {FlexLayoutModule} from '@angular/flex-layout';
-import {MaterialModule} from './material.module';
 import { InventoryFormComponent } from './views/inventoryView/inventory-form/inventory-form.component';
 
 
@@ -50,7 +49,7 @@ import { InventoryFormComponent } from './views/inventoryView/inventory-form/inv
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
-    MaterialModule,
+
     BrowserAnimationsModule,
     FlexLayoutModule
 

@@ -4,6 +4,7 @@ import {InventoryService} from '../../services/inventory.service';
 import {Router} from '@angular/router';
 import { AngularFirestore} from '@angular/fire/firestore';
 import {NavbarComponent} from '../navbar/navbar.component';
+import {InventoryFormComponent} from '../inventoryView/inventory-form/inventory-form.component';
 
 
 @Component({
@@ -14,8 +15,8 @@ import {NavbarComponent} from '../navbar/navbar.component';
 export class DashboardComponent implements OnInit {
   inventoryTrue: boolean;
 
-  constructor(private db: AngularFirestore, public auth: AuthService, public inventory: InventoryService, private router: Router) {
-    this.inventoryTrue = this.inventory.inventoryExists().then(val => {
+  constructor(private db: AngularFirestore, public auth: AuthService, public inventory: InventoryService, private router: Router, public ifc: InventoryFormComponent) {
+    this.inventoryTrue = this.inventory.inventoryExists(this.ifc.itemBarcode).then(val => {
       this.inventoryTrue = val;
       return this.inventoryTrue;
     });
@@ -26,10 +27,6 @@ export class DashboardComponent implements OnInit {
 
   inventoryButtonClick(){
     this.router.navigateByUrl('/inventory');
-  }
-
-  createInventory(){
-    this.inventory.createInventoryList();
   }
 
 
