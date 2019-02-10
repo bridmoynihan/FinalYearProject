@@ -49,7 +49,6 @@ import { InventoryFormComponent } from './views/inventoryView/inventory-form/inv
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
-
     BrowserAnimationsModule,
     FlexLayoutModule
 

@@ -21,49 +21,42 @@ export class InventoryService implements OnInit {
 
   constructor(private db: AngularFirestore, private afAuth: AngularFireAuth) {
     this.item_barcode = '101011';
-
-    this.afAuth.authState.subscribe(
-      user => {
-        if (user) {
-          this.uid = user.uid;
-          return this.uid;
-        }
-      }
-    );
   }
 
-  createInventoryList(): AngularFirestoreCollection<Inventory> {
-    this.item_barcode = '101011';
-    const inventoryRef = this.db.collection('inventory').doc(this.uid).collection('items').doc(this.item_barcode).set({
-        item_name: '',
-        location_barcode: '',
-        location: '',
-        quantity: '',
-        quality: '',
-        expiry_date: firestore.Timestamp.fromDate(new Date('08/02/19')),
-        status: true
-      })
-    ;
-    return;
-  }
+  // createInventoryList(): AngularFirestoreCollection<Inventory> {
+  //   this.item_barcode = '101011';
+  //   const inventoryRef = this.db.collection('inventory').doc(this.uid).collection(this.item_barcode).doc('details' + this.item_barcode).set({
+  //       item_name: '',
+  //       location_barcode: '',
+  //       location: '',
+  //       quantity: '',
+  //       quality: '',
+  //       expiry_date: firestore.Timestamp.fromDate(new Date('08/02/19')),
+  //       status: true
+  //     })
+  //   ;
+  //   return;
+  // }
 
   // displayInventoryList(): AngularFirestoreCollection<Inventory[]> {
   // }
 
-  inventoryExists(itemBarcode): any {
-    this.item_barcode = '101011'; // read in barcode value from form on inventory creation page
+  inventoryExists(): any {
+    return this.getUID().then(result => {
+      this.uid = String(result)
+      console.log(this.uid);
+      const docRef = this.db.collection('inventory').doc(this.uid)
 
-    const docRef = this.db.collection('inventory').doc(this.uid).collection('items').doc(itemBarcode)
-
-    return docRef.ref.get().then(doc => {
-        if (doc.exists) {
-          return true;
-        } else {
-          return false;
+      return docRef.ref.get().then(doc => {
+          if (doc.exists) {
+            return true;
+          } else {
+            return false;
+          }
         }
-      }
-    ).catch(function(error) {
-      console.log('Error getting document: ', error);
+      ).catch(function(error) {
+        console.log('Error getting document: ', error);
+      });
     });
   }
 
@@ -71,8 +64,7 @@ export class InventoryService implements OnInit {
     console.log(this.uid);
     console.log(barcode);
     console.log(name);
-
-    const docRef = this.db.collection('inventory').doc(this.uid).collection('items').doc(barcode)
+    const docRef = this.db.collection('inventory').doc(this.uid).collection(barcode).doc('details' + barcode)
     docRef.set({
       itemName: name,
       expiryDate: expiry,
@@ -92,6 +84,20 @@ export class InventoryService implements OnInit {
     .catch(function(error) {
       console.error("Error writing document: ", error);
     });;
+  }
+
+  getUID(){
+    var promise = new Promise(resolve => {
+      this.afAuth.authState.subscribe(
+          user => {
+            if (user) {
+              this.uid = user.uid;
+              resolve(this.uid);
+            }
+          }
+        );
+    });
+    return promise;
   }
 
   ngOnInit(): any {
