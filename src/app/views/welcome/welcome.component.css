@@ -36,6 +36,10 @@ body {
   padding-right:7px;
 }
 
+.btnText {
+  color: #343A40;
+}
+
 .footer-copyright {
   color: white!important;
 }
@@ -92,4 +96,7 @@ body {
 }
 .containerText {
   opacity: .9;
+}
+.mainText h3 {
+  line-height: 90px!important;
 }
