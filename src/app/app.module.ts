@@ -1,3 +1,4 @@
+import { InventoryEditComponent } from './views/inventoryView/inventory-edit/inventory-edit.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -7,35 +8,33 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AppRoutingModule } from './app.routes.module';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import {BsDropdownModule} from 'ngx-bootstrap';
+import {FlexLayoutModule} from '@angular/flex-layout';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import 'hammerjs';
 
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
 import {environment} from '../environments/environment';
 import { WelcomeComponent } from './views/welcome/welcome.component';
-import { UserFormComponent } from './users/user-form/user-form.component';
 import {NavbarComponent} from './views/navbar/navbar.component';
+import { InventoryFormComponent } from './views/inventoryView/inventory-form/inventory-form.component';
+import {InventoryListComponent} from './views/inventoryView/inventory-list.component';
 
 import { AuthService } from './services/auth.service';
 import { AuthGuardService } from './services/auth-guard.service';
-
-import { TooltipModule } from 'ngx-bootstrap/tooltip';
-import { ModalModule } from 'ngx-bootstrap/modal';
-import {BsDropdownModule} from 'ngx-bootstrap';
 import {InventoryService} from './services/inventory.service';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import 'hammerjs';
-import {FlexLayoutModule} from '@angular/flex-layout';
-import { InventoryFormComponent } from './views/inventoryView/inventory-form/inventory-form.component';
-
-
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
     WelcomeComponent,
-    UserFormComponent,
     NavbarComponent,
-    InventoryFormComponent
+    InventoryFormComponent,
+    InventoryListComponent,
+    InventoryEditComponent
   ],
   imports: [
     BrowserModule,

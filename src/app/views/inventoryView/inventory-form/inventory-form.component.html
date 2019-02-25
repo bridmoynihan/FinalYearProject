@@ -51,12 +51,22 @@
             <option>unit</option>
           </select>
         </div>
+        <div class="form-group col-md-2">
+          <label for="inputType">Quality</label>
+          <select id="inputType" [(ngModel)]="quality" class="form-control">
+            <option selected>Choose Quality Type...</option>
+            <option>Great</option>
+            <option>Good</option>
+            <option>Average</option>
+            <option>Bad</option>
+          </select>
+        </div>
         <div class="form-group">
           <label for="inputCost">Cost</label>
           <input type="number" class="form-control" id="inputCost" [(ngModel)]="cost">
         </div>
       </div>
-      <button type="button" class="btn btn-primary" (click)="addItemInventory()">Add Item to Inventory</button>
+      <button type="button" class="btn btn-primary" (click)="saveItem()">Add Item to Inventory</button>
     </form>
   </div>
 </div>

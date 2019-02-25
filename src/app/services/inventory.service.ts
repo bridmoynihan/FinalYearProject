@@ -1,42 +1,48 @@
-import { Router } from '@angular/router';
+import { Item } from './../views/inventoryView/item.model';
 import {Injectable, OnInit} from '@angular/core';
-import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection} from '@angular/fire/firestore';
-import { AngularFireObject, AngularFireList } from 'angularfire2/database';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { AngularFireAuth } from 'angularfire2/auth';
-import {Observable} from 'rxjs';
-import {first} from 'rxjs/operators';
-import {firestore} from 'firebase';
 import {map} from 'rxjs/operators';
+import {Observable} from 'rxjs'
 
-
-interface Inventory {
-  uid: string;
-}
+// export interface Item {
+//   id: string;
+// }
 
 @Injectable()
 export class InventoryService implements OnInit {
-  inventory: AngularFirestoreCollection<Inventory> = null;
+  items: AngularFirestoreCollection<Item>;
+  itemDoc: AngularFirestoreDocument<Item>;
   uid: string;
-  item_barcode: '101011'; // retrieve value from form
+ 
+  private CollectRef: AngularFirestoreCollection<Item>;
+  barCode: string;
 
   constructor(private db: AngularFirestore, private afAuth: AngularFireAuth) {
-    this.item_barcode = '101011';
     this.afAuth.authState.subscribe(
       user => {
         if (user) {
           this.uid = user.uid;
+          this.items = this.db.collection<Item>('inventory' + this.uid)
+          console.log("creating inventory2 " + this.uid);
           return user.uid;
         }
       }
     );
+    
+
   }
 
-  displayInventoryList(): AngularFirestoreCollection<Inventory[]> {
-   const docRef = this.db.collection('inventory').doc(this.uid)
-   docRef.ref.get().then(doc => {
-     console.log(Object.keys(doc.data()))
+  displayInventoryList(barcode): any {
+    const docs = []
+   const docRef = this.db.collection('inventory'+ this.uid).ref.get()
+   .then(function(querySnapshot){
+     querySnapshot.forEach(function(doc){
+       docs.push(doc.data());
+     })
    })
-   return;
+  
+   return docs;
   }
 
   createInventory(barcode, entryDate){
@@ -69,36 +75,21 @@ export class InventoryService implements OnInit {
     });
   }
 
-  addInventoryItem(barcode, name, expiry, entryDate, quality, location?, locationbarcode?, vendor?, quantity?, qntType?, cost?): any {
-    var isExists: boolean;
-    this.inventoryExists(barcode).then(result => {
-      isExists = result;
-      console.log('is exists: ' + isExists)
-    });
-    if(!isExists){
-      this.createInventory(barcode, entryDate);
-      console.log('created inventory')
-    }
-    const subDocRef = this.db.collection('inventory' + this.uid).doc(barcode)
-    subDocRef.set({
-      itemName: name,
-      expiryDate: expiry,
-      entryDate: entryDate,
-      quality: quality,
-      location: location,
-      locationBarcode: locationbarcode,
-      vendor: vendor,
-      quantity: quantity,
-      qntType: qntType,
-      cost: cost
+  addItem(item){
+    this.items.add(item);
+  }
 
-    }, { merge: true })
-    .then(function() {
-      console.log("Document successfully written!");
-    })
-    .catch(function(error) {
-      console.error("Error writing document: ", error);
-    });;
+  updateItem(item, docID){
+    console.log(docID)
+    this.itemDoc = this.db.doc<Item>('inventory' + this.uid + `/${docID}`)
+    this.itemDoc.update(item);
+  }
+  deleteItem(barcode){
+    this.itemDoc = this.items.doc(barcode)
+    this.itemDoc.delete().then(function() {
+  }).catch(function(error) {
+      console.error("Error removing document: ", error);
+  });;
   }
 
   getUID(){
@@ -114,6 +105,21 @@ export class InventoryService implements OnInit {
     });
     return promise;
   }
+  getBarcode(){
+    var promise = new Promise(resolve => {
+    const CollectRef = this.db.collection('inventory' + this.uid).ref
+    .get().then(snapShot => {
+      snapShot.docs.forEach(doc => {
+        this.barCode = doc.id
+        console.log("id" + this.barCode)
+        resolve(this.barCode)
+      })
+    });
+  })
+  return promise;
+      
+
+    }
 
   ngOnInit(): any {
 
