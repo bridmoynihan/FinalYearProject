@@ -39,3 +39,7 @@ img {
   padding-top: 0px!important;
   top: 48px!important;
 }
+
+.nav-item .router-link-active {
+  color: orange;
+}

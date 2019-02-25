@@ -1,12 +1,12 @@
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <nav class="navbar navbar-dark bg-dark">
+<nav id="navbar-fixed-top" class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
     <a class="navbar-brand">
       <img src="../../assets/images/stockifybanner.png">
     </a>
-  </nav>
+  </div>
 </nav>
-
+<div class="container" id="containerOut">
 <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
   <div class="carousel-inner">
     <div class="carousel-item active">
@@ -14,6 +14,20 @@
     </div>
   </div>
 </div>
+
+<!-- <div class="container" id="containerIn">
+  <div class="containerText">
+    <h1>Hello there!</h1>
+    <h2>Welcome to Stock-ify!</h2>
+    <div class="mainText">
+    <h3>The web application that helps kitchens and restaurants maintain and manage an online virtual inventory.</h3>
+    <h3>We can also help you with waste management by monitoring your wasted stock.</h3>
+    <h3>Our supplier and vendor directory can keep track of your recent purchases.</h3>
+  </div>
+  </div>
+  </div>
+
+</div> -->
 
 <div class="fixed-footer">
   <div class="container">
@@ -24,11 +38,14 @@
       <li class="list-inline-item">
         <a type="button" class="btn-primary" (click)="signInWithGoogle()">
           <i class="fa fa-google" aria-hidden="true"></i>
+          <span class="btnText">
           Login with Google
+          </span>
         </a>
       </li>
+      <h6>Copyright &copy; 2019 Stock-ify UCC Final Year Project</h6>
     </ul>
-    <h6>Copyright &copy; 2019 Stock-ify UCC Final Year Project</h6></div>
+  </div>
 </div>
 
 

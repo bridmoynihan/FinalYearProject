@@ -1,13 +1,15 @@
 export class Item {
   constructor(
-    public barcode: number,
-    public name: string,
-    public ExpiryDate: string,
-    public quantity: number,
-    public cost: number,
-    public locationBarcode: number,
-    public location: string,
-    public supplier: string
+  public itemBarcode: string,
+  public itemName: string,
+  public expiryDate: Date,
+  public location?: string,
+  public locationBarcode?: string,
+  public vendor?: string,
+  public quantity?: string,
+  public qntType?: string,
+  public cost?: string,
+  // public quality?: string
 
     ){}
 }

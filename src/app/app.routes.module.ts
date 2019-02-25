@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, CanActivate } from '@angular/router';
 
 import { WelcomeComponent } from './views/welcome/welcome.component';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
 
 import {AuthGuardService} from './services/auth-guard.service';
 import {InventoryFormComponent} from './views/inventoryView/inventory-form/inventory-form.component';
-
+import {InventoryListComponent} from './views/inventoryView/inventory-list.component'
+import { InventoryEditComponent } from './views/inventoryView/inventory-edit/inventory-edit.component';
 const appRoutes: Routes = [
   {
     path: 'welcome',
@@ -19,9 +20,19 @@ const appRoutes: Routes = [
     component: DashboardComponent
   },
   {
-    path: 'inventory',
+    path: 'inventory-list',
+    canActivate: [AuthGuardService],
+    component: InventoryListComponent
+  },
+  {
+    path: 'inventory-form',
     canActivate: [AuthGuardService],
     component: InventoryFormComponent
+  },
+  {
+    path: 'inventory-edit',
+    canActivate: [AuthGuardService],
+    component: InventoryEditComponent
   }
 ];
 

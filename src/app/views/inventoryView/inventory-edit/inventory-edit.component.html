@@ -1,0 +1,60 @@
+<app-navbar></app-navbar>
+<!-- <h3>today's date: {{entryDate  | date: 'dd/MM/yyyy'}}</h3> -->
+<div >
+</div>
+<div class="card">
+  <div class="card-body">
+    <form ngNoForm>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputItemBarcode">Item Barcode</label>
+          <input type="text" class="form-control" id="inputItemBarcode" [(ngModel)]="this.itemBarcode" value={{this.itemBarcode}} required="required">
+    
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputName">Item Name</label>
+          <input type="text" class="form-control" id="inputName" [(ngModel)]="itemName" value = {{this.itemName}} required="required">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputLocation">Location</label>
+        <input type="text" class="form-control" id="inputLocation" [(ngModel)]="location" value = {{this.location}}>
+      </div>
+      <div class="form-group">
+        <label for="inputLocationBarcode">Location Barcode</label>
+        <input type="text" class="form-control" id="inputLocationBarcode" [(ngModel)]="locationBarcode" value = {{this.locationBarcode}}>
+      </div>
+      <div class="form-group">
+        <label for="inputExpiryDate">Expiry Date</label>
+        <input type="date" class="form-control" id="inputExpiryDate" [(ngModel)]="expiryDate" value = {{this.expiryDate}} required="required">
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputVendor">Vendor</label>
+          <input type="text" class="form-control" id="inputVendor" [(ngModel)]="vendor" value = {{this.vendor}}>
+        </div>
+        <div class="form-group col-md-4">
+          <label for="inputQuantity">Quantity</label>
+          <input type="text" class="form-control" id="inputQuantity" [(ngModel)]="quantity" value = {{this.quantity}}>
+        </div>
+        <div class="form-group col-md-2">
+          <label for="inputType">Type</label>
+          <select id="inputType" [(ngModel)]="qntType" class="form-control" value = {{this.qntType}}>
+            <option selected>Choose Quantity Type...</option>
+            <option>kgs</option>
+            <option>grams</option>
+            <option>lbs</option>
+            <option>ltrs</option>
+            <option>unit</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="inputCost">Cost</label>
+          <input type="number" class="form-control" id="inputCost" [(ngModel)]="cost">
+        </div>
+      </div>
+      <button type="button" class="btn btn-primary" (click)="editItem()">Update Item</button>
+      <button type="button" class="btn" (click)="cancel()">Cancel</button>
+    </form>
+  </div>
+</div>

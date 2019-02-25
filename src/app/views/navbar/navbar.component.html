@@ -1,22 +1,22 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">Stock-ify</a>
+  <a class="navbar-brand" href="#"><img src="../../assets/images/stockifylogo.jpg"></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
       <li [routerLinkActive]="['active']" class="nav-item">
-        <a [routerLink]="['/dashboard']" class="nav-link" href="dashboard">Dashboard<span class="sr-only">(current)</span></a>
+        <a [routerLink]="['/dashboard']" routerLinkActive="router-link-active" class="nav-link" href="dashboard">Dashboard<span class="sr-only">(current)</span></a>
       </li>
       <li [routerLinkActive]="['active']" class="nav-item">
-        <a [routerLink]="['/inventory']" class="nav-link" href="inventory">Inventory Management</a>
+        <a [routerLink]="['/inventory-list']" routerLinkActive="router-link-active" class="nav-link" href="inventory-list">Inventory Management</a>
       </li>
       <li [routerLinkActive]="['active']" class="nav-item">
-        <a [routerLink]="['/wastecalculator']" class="nav-link" href="#">Waste Calculator</a>
+        <a [routerLink]="['/wastecalculator']" routerLinkActive="router-link-active" class="nav-link" href="#">Waste Calculator</a>
       </li>
       <li [routerLinkActive]="['active']" class="nav-item">
-        <a [routerLink]="['/analytics']" class="nav-link" href="#">Analytics</a>
+        <a [routerLink]="['/analytics']" routerLinkActive="router-link-active" class="nav-link" href="#">Analytics</a>
       </li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
@@ -41,7 +41,7 @@
                     <p class="text-left small">{{user.email}}</p>
                     <p class="text-left">
                       <!--<button type="button" class="btn-dark" onclick="authService.logout()"><i class="fa fa-google" aria-hidden="true"> Logout</i></button>-->
-                      <a href="" (click)="authService.logout()"> Logout</a>
+                      <a href="" (click)="auth.logout()"> Logout</a>
                     </p>
                   </div>
                 </div>
