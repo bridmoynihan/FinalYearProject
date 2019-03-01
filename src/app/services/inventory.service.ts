@@ -79,10 +79,16 @@ export class InventoryService implements OnInit {
     this.items.add(item);
   }
 
-  updateItem(item, docID){
-    console.log(docID)
+  updateItem(update, docID){
+    console.log("item updated "+ update.location)
     this.itemDoc = this.db.doc<Item>('inventory' + this.uid + `/${docID}`)
-    this.itemDoc.update(item);
+    this.itemDoc.update({
+      itemName: update.itemName,
+      itemBarcode: update.itemBarcode,
+      expiryDate: update.expiryDate,
+      location: update.location
+    });
+    
   }
   deleteItem(barcode){
     this.itemDoc = this.items.doc(barcode)

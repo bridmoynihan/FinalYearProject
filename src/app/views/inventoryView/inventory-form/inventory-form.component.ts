@@ -31,28 +31,6 @@ export class InventoryFormComponent implements OnInit {
     
    }
 
-   editItem() {
-     this.editMode = true
-     console.log(this.editMode)
-    // console.log(item)
-    // this.itemToEdit = item;
-    
-
-    // this.itemName = item.itemName;
-    // this.itemBarcode = item.itemBarcode;
-    // this.expiryDate = item.expiryDate;
-    // this.location = item.location;
-    // this.locationBarcode = item.locationBarcode;
-    // this.vendor = item.vendor;
-    // this.quantity = item.quantity;
-    // this.qntType = item.qntType;
-    // this.cost = item.cost;
-    // this.quality = item.quality;
-
-  }
-
-  //move to inventory form
-
   saveItem(){
     if(this.itemName && this.itemBarcode && this.expiryDate !== null){
       let item = {
@@ -68,6 +46,7 @@ export class InventoryFormComponent implements OnInit {
        quality: String(this.quality)
       };
         this.inventoryService.addItem(item)
+        this.validForm = true;
       }
       this.itemBarcode = ""
        this.itemName = ""
@@ -79,6 +58,10 @@ export class InventoryFormComponent implements OnInit {
        this.qntType = ""
       this.cost = ""
       this.quality = ""
+    }
+
+    closeItem(){
+      this.router.navigateByUrl('/inventory-list')
     }
 
   ngOnInit() {

@@ -26,6 +26,7 @@ import {InventoryListComponent} from './views/inventoryView/inventory-list.compo
 import { AuthService } from './services/auth.service';
 import { AuthGuardService } from './services/auth-guard.service';
 import {InventoryService} from './services/inventory.service';
+import {WasteService} from './services/waste.service'
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,7 +35,8 @@ import {InventoryService} from './services/inventory.service';
     NavbarComponent,
     InventoryFormComponent,
     InventoryListComponent,
-    InventoryEditComponent
+    InventoryEditComponent //can remove this
+  
   ],
   imports: [
     BrowserModule,
@@ -52,7 +54,7 @@ import {InventoryService} from './services/inventory.service';
     FlexLayoutModule
 
   ],
-  providers: [AuthService, AuthGuardService, InventoryService],
+  providers: [AuthService, AuthGuardService, InventoryService, WasteService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
