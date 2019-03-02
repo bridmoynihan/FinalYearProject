@@ -40,6 +40,7 @@ export class InventoryListComponent implements OnInit{
 
   editMode: boolean = false;
   itemToEdit: any = {};
+  public selectedItem: any;
 
   constructor(public inventoryServ: InventoryService, public router: Router, public db: AngularFirestore, public waste: WasteService){
     
@@ -62,26 +63,32 @@ export class InventoryListComponent implements OnInit{
          const id = a.payload.doc.id;
          return { id, data };
        });
-    }).switchMap((usersId: string[]) => {
-      return Observable.combineLatest( usersId.map((u)=>{
-        return this.onGetUserDocuments(u);
-      }))
     }));
+    
     this.inventoryExists();
 
-    // let docList: Item[]
-    // this.db.collection('inventory' + this.uid).ref.get().then(function(querySnapshot){
-    //   querySnapshot.forEach(function(doc){
-    //     this.docList.push(doc.data())
-    //   })
-    // }) 
-    // for(let i = 0; i<= docList.length-1; i++){
-    //   console.log("length of list " + docList.length)
-    //   this.qualityCheck(docList[i]);
-    // }
+    let docList: any[]
+    let idList: any[]
+    docList = []
+    idList = []
+    let i = this.db.collection('inventory' + this.uid).ref.get().then(function(querySnapshot){
+      querySnapshot.forEach(function(doc){
+        docList.push(doc.data())
+        idList.push(doc.id)
+        return {docList, idList}
+      })
+    })
+    i.then(res => {
+      for(let i = 0; i<= docList.length-1; i++){
+        this.qualityCheck(docList[i], idList[i]);
+      }
+    })
+        
+    
     
     
   }
+  
 
   inventoryExists(){
     
@@ -137,14 +144,18 @@ export class InventoryListComponent implements OnInit{
     if(item.location == undefined){
       item.location = item.data.location
     }
+    if(item.quality == undefined){
+      item.quality = item.data.quality
+    }
     let update = {
       itemBarcode: item.itemBarcode,
       itemName: item.itemName,
       expiryDate: item.expiryDate,
-      location: item.location
+      location: item.location,
+      quality: item.quality
     }
     console.log("updated " + item.location + " " + id)
-    
+    this.qualityCheck(update, id);
     this.inventoryServ.updateItem(update, id);
   }
 
@@ -152,12 +163,19 @@ export class InventoryListComponent implements OnInit{
     this.inventoryServ.deleteItem(docID);
   }
   addToWaste(item, amount, type, cost){
+    console.log("item id " + item.id)
+    if(+item.data.quantity <= amount || + item.data.quantity == 0){
+      this.deleteItem(item.id);
+      let newAmount = amount - +item.data.quantity;
+      console.log("amount to waste: " + newAmount)
+      this.waste.createWasteDoc(item, newAmount, type, cost);
+      return;
+    }
     let newAmount = +item.data.quantity - amount;
-    console.log(newAmount)
-    this.waste.createWasteDoc(item, amount, type, cost)
+    this.waste.createWasteDoc(item, amount, type, cost);
     let doc = this.db.collection('inventory' + this.uid).doc(item.id).update({
       "quantity": newAmount,
-    })
+    });
   }
 
   getBarcode(){
@@ -181,17 +199,31 @@ export class InventoryListComponent implements OnInit{
   inventoryButtonClick(){
     this.router.navigateByUrl('/inventory-form');
   }
-  qualityCheck(item){
+  qualityCheck(item, id){
     let exp = item.expiryDate
     let exptime = new Date(exp).getTime();
     let currentDate = new Date().getTime();
     let diff = exptime - currentDate
     let days = Math.round(Math.abs(diff/(1000*60*60*24)))
     console.log("days left: " + days)
-    if (days > 29){console.log("status great ")}
-    else if (days >= 15){
-      console.log("status is ok")
+    
+    if (days > 29){
+      item.quality = "Great"
+      this.inventoryServ.updateItem(item, id)
     }
-    else if (days <= 5){console.log("status bad")}
+    else if (days >= 15){
+      item.quality = "Ok"
+      this.inventoryServ.updateItem(item, id)
+
+    }
+    else if (days <= 5){
+      item.quality = "Bad"
+      this.inventoryServ.updateItem(item, id)
+    }
+  }
+  setSelectedItem(item, modal){
+    this.selectedItem = item;
+    .showmodal()
+    console.log(this.selectedItem.data.itemName);
   }
 }

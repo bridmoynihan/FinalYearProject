@@ -39,7 +39,7 @@
                    </td>
                     <td *ngIf="!item.data.isEditable">{{item.data.location}}</td>
                     <td>{{item.data.quantity}}</td>
-                    <td>{{item.data.quality}}</td>
+                    <td><span class="badge badge-pill badge-warning">{{item.data.quality}}</span></td>
                     <td>
                       <div *ngIf="item.data.isEditable">
                       <button class="btn btn-success" (click)= "updateItem(item, item.id)">
@@ -48,6 +48,7 @@
                     
                       </button>
                     </div>
+                    
                     <div *ngIf="item.data.isEditable">
                       <button class="btn btn-danger" (click)= "setEdit(item, false)">
                     
@@ -55,34 +56,34 @@
                     
                       </button>
                     </div>
-
-                      <button class="btn btn-success" (click)="qualityCheck(item)">
+                      <button class="btn btn-success" (click)="setEdit(item, true)">
                     
                         <i class="fa fa-edit"></i>
                     
                       </button>
                       
-                      <button class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter">
+                      <button class="btn btn-danger" data-toggle="modal" (click)="setSelectedItem(item)">
                     
                         <i class="fa fa-remove"></i>
+                        
                     
                       </button>
-                      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                          <div class="modal-content">
-                              <label for="inputQuantity">Quantity</label>
-                              <input type="text" class="form-control" id="inputQuantity" [(ngModel)]="quantity" value = {{this.quantity}}>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="addToWaste(item, quantity, item.data.qntType , item.data.cost)">Delete and add to waste</button>
-                              <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="deleteItem(item.id)" > Delete Without Waste</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
                     
                     </td>
-                    
+                                     
                   </tr>
+                  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered"  role="document">
+                      <div class="modal-content">
+                          <label for="inputQuantity">Quantity</label>
+                          <input type="text" class="form-control" id="inputQuantity" [(ngModel)]="quantity" value = {{this.selectedItem.data.quantity}} placeholder="Place the amount to discard here...">
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="addToWaste(this.selectedItem, quantity, this.selectedItem.data.qntType , this.selectedItem.data.cost)">Delete and add to waste</button>
+                          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="deleteItem(this.selectedItem.id)" > Delete Without Waste</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div> 
                 </tbody>
               </table>
               

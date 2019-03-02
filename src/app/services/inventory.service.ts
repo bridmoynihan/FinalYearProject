@@ -86,7 +86,8 @@ export class InventoryService implements OnInit {
       itemName: update.itemName,
       itemBarcode: update.itemBarcode,
       expiryDate: update.expiryDate,
-      location: update.location
+      location: update.location,
+      quality: update.quality
     });
     
   }
