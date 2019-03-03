@@ -16,6 +16,7 @@ export class WasteService implements OnInit {
  
   private CollectRef: AngularFirestoreCollection<Waste>;
   barCode: string;
+  // public amountList: String[]
 
   constructor(private db: AngularFirestore, private afAuth: AngularFireAuth) {
     this.afAuth.authState.subscribe(
@@ -28,7 +29,13 @@ export class WasteService implements OnInit {
         }
       }
     );
-    this.wastes = this.db.collection<Waste>('waste' + this.uid)
+    this.getUID().then(res => {
+      this.uid = String(res)
+      return this.uid
+    })
+    this.wastes = this.db.collection<Waste>('waste' + 'veWj2VNOz5RFoX1lGl4TWEQaXGq1')
+    console.log("uid " + this.uid)
+
     
 
   }
@@ -49,6 +56,37 @@ export class WasteService implements OnInit {
     this.wastes.add(waste)
     console.log("waste created added to database")
   }
+
+  getAmountData(){
+    let amountList = []
+    let dateList = []
+    let i = this.wastes.ref.get().then(
+      snapshot => {
+        snapshot.forEach(doc => {
+          amountList.push(doc.data().amount)
+          dateList.push(doc.data().entryDate)
+          console.log("list size: " + amountList[0])
+          return {amountList, dateList}
+        })
+      }
+    )
+    return i
+  }
+
+  getUID(){
+    var promise = new Promise(resolve => {
+      this.afAuth.authState.subscribe(
+          user => {
+            if (user) {
+              this.uid = user.uid;
+              resolve(this.uid);
+            }
+          }
+        );
+    });
+    return promise;
+  }
+
   ngOnInit(): any {
 
 }

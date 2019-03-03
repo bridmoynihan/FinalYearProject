@@ -221,9 +221,9 @@ export class InventoryListComponent implements OnInit{
       this.inventoryServ.updateItem(item, id)
     }
   }
-  setSelectedItem(item, modal){
-    this.selectedItem = item;
-    .showmodal()
-    console.log(this.selectedItem.data.itemName);
-  }
+  // setSelectedItem(item, modal){
+  //   this.selectedItem = item;
+  //   // .showmodal()
+  //   console.log(this.selectedItem.data.itemName);
+  // }
 }

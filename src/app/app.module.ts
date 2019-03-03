@@ -1,4 +1,3 @@
-import { InventoryEditComponent } from './views/inventoryView/inventory-edit/inventory-edit.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -22,11 +21,16 @@ import { WelcomeComponent } from './views/welcome/welcome.component';
 import {NavbarComponent} from './views/navbar/navbar.component';
 import { InventoryFormComponent } from './views/inventoryView/inventory-form/inventory-form.component';
 import {InventoryListComponent} from './views/inventoryView/inventory-list.component';
+import { WasteGraphComponent } from './views/wasteView/waste-graph.component';
+import { InventoryEditComponent } from './views/inventoryView/inventory-edit/inventory-edit.component';
+import { WasteViewComponent } from './views/wasteView/waste-view.component';
+
 
 import { AuthService } from './services/auth.service';
 import { AuthGuardService } from './services/auth-guard.service';
 import {InventoryService} from './services/inventory.service';
-import {WasteService} from './services/waste.service'
+import {WasteService} from './services/waste.service';
+import { PlotlyModule } from 'angular-plotly.js';
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,6 +39,8 @@ import {WasteService} from './services/waste.service'
     NavbarComponent,
     InventoryFormComponent,
     InventoryListComponent,
+    WasteGraphComponent,
+    WasteViewComponent,
     InventoryEditComponent //can remove this
   
   ],
@@ -51,7 +57,8 @@ import {WasteService} from './services/waste.service'
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
     BrowserAnimationsModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    PlotlyModule
 
   ],
   providers: [AuthService, AuthGuardService, InventoryService, WasteService],
