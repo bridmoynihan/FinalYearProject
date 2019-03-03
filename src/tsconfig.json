@@ -19,7 +19,8 @@
       "firebase",
       "jasmine",
       "mocha",
-      "node"
+      "node",
+      "jquery"
     ]
   }
   ,

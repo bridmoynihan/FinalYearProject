@@ -23,7 +23,7 @@ export class WasteGraphComponent {
     getAmount(){
         let amountList = []
         let dateList = []
-        this.wasteServ.getAmountData().then(res => {
+        this.wasteServ.getData().then(res => {
             // amountList = res
             // dateList = res[1]
             console.log("amount list item: " + amountList[0])

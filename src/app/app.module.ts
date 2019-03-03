@@ -1,3 +1,4 @@
+import { DeleteModalComponent } from './views/inventoryView/delete-modal.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -9,6 +10,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AppRoutingModule } from './app.routes.module';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {BsDropdownModule} from 'ngx-bootstrap';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -25,7 +27,6 @@ import { WasteGraphComponent } from './views/wasteView/waste-graph.component';
 import { InventoryEditComponent } from './views/inventoryView/inventory-edit/inventory-edit.component';
 import { WasteViewComponent } from './views/wasteView/waste-view.component';
 
-
 import { AuthService } from './services/auth.service';
 import { AuthGuardService } from './services/auth-guard.service';
 import {InventoryService} from './services/inventory.service';
@@ -41,7 +42,8 @@ import { PlotlyModule } from 'angular-plotly.js';
     InventoryListComponent,
     WasteGraphComponent,
     WasteViewComponent,
-    InventoryEditComponent //can remove this
+    InventoryEditComponent,  //can remove this
+    DeleteModalComponent
   
   ],
   imports: [
@@ -56,11 +58,12 @@ import { PlotlyModule } from 'angular-plotly.js';
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
+    NgbModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
     PlotlyModule
-
   ],
+  entryComponents: [DeleteModalComponent],
   providers: [AuthService, AuthGuardService, InventoryService, WasteService],
   bootstrap: [AppComponent]
 })

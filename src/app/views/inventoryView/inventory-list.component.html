@@ -15,10 +15,10 @@
                     <th scope="col">Name</th>
                     <th scope="col">Expiry</th>
                     <th scope="col">Location</th>
-                    <th scope="col">Quantity</th>
                     <th scope="col">Cost</th>
+                    <th scope="col">Quantity</th>
                     <th scope="col">Status</th>
-                    <!-- <th scope="col">Handle</th> -->
+                    <th scope="col">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -67,28 +67,12 @@
                     
                       </button>
                       
-                      <button class="btn btn-danger" data-toggle="modal">
-                    
-                        <i class="fa fa-remove"></i>
-                        
-                    
-                      </button>
+                      <app-delete-modal [Item] = "item.data" [ItemID] = "item.id"></app-delete-modal>
                     
                     </td>
                                      
                   </tr>
-                  <!-- <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered"  role="document">
-                      <div class="modal-content">
-                          <label for="inputQuantity">Quantity</label>
-                          <input type="text" class="form-control" id="inputQuantity" [(ngModel)]="quantity" value = {{this.selectedItem.data.quantity}} placeholder="Place the amount to discard here...">
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="addToWaste(this.selectedItem, quantity, this.selectedItem.data.qntType , this.selectedItem.data.cost)">Delete and add to waste</button>
-                          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="deleteItem(this.selectedItem.id)" > Delete Without Waste</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>  -->
+                  
                 </tbody>
               </table>
               

@@ -3,7 +3,8 @@ import {Injectable, OnInit} from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { AngularFireAuth } from 'angularfire2/auth';
 import {map} from 'rxjs/operators';
-import {Observable} from 'rxjs'
+import {Observable} from 'rxjs';
+import {InventoryService} from '../services/inventory.service';
 
 @Injectable()
 export class WasteService implements OnInit {
@@ -18,36 +19,20 @@ export class WasteService implements OnInit {
   barCode: string;
   // public amountList: String[]
 
-  constructor(private db: AngularFirestore, private afAuth: AngularFireAuth) {
-    this.afAuth.authState.subscribe(
-      user => {
-        if (user) {
-          this.uid = user.uid;
-          this.wastes = this.db.collection<Waste>('waste' + this.uid)
-          console.log("creating waste " + this.uid);
-          return user.uid;
-        }
-      }
-    );
-    this.getUID().then(res => {
-      this.uid = String(res)
+  constructor(private db: AngularFirestore, private afAuth: AngularFireAuth, public inventoryServ: InventoryService,) {
+    this.inventoryServ.getUID().then(result => {
+      this.uid = String(result)
       return this.uid
-    })
-    this.wastes = this.db.collection<Waste>('waste' + 'veWj2VNOz5RFoX1lGl4TWEQaXGq1')
-    console.log("uid " + this.uid)
-
-    
-
+    });
   }
   createWasteDoc(item, amount, type, cost){
       let dateStr = new Date().toLocaleString()
       let index = dateStr.indexOf(", ")
       let date = dateStr.substr(0, index)
-      console.log("date" + date)
-      console.log("making waste...")
+    this.wastes = this.db.collection<Waste>('waste' + this.uid)
     let waste = {
-        itemBarcode: item.data.itemBarcode,
-        itemName: item.data.itemName,
+        itemBarcode: item.itemBarcode,
+        itemName: item.itemName,
         cost: cost,
         amount: amount,
         qntType: type,
@@ -57,9 +42,11 @@ export class WasteService implements OnInit {
     console.log("waste created added to database")
   }
 
-  getAmountData(){
+  getData(){
     let amountList = []
     let dateList = []
+    console.log("uid for waste " + this.uid)
+    this.wastes = this.db.collection<Waste>('waste' + this.uid)
     let i = this.wastes.ref.get().then(
       snapshot => {
         snapshot.forEach(doc => {
@@ -71,20 +58,6 @@ export class WasteService implements OnInit {
       }
     )
     return i
-  }
-
-  getUID(){
-    var promise = new Promise(resolve => {
-      this.afAuth.authState.subscribe(
-          user => {
-            if (user) {
-              this.uid = user.uid;
-              resolve(this.uid);
-            }
-          }
-        );
-    });
-    return promise;
   }
 
   ngOnInit(): any {

@@ -1,0 +1,28 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Delete Item or Add to Waste</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="form-group">
+            <label for="inputQuantity">Quantity</label>
+          <div class="input-group">
+            <input type="text" class="form-control" id="inputQuantity" [(ngModel)]="wasteQuant" [ngModelOptions]="{standalone: true}" value = {{this.Item.quantity}} placeholder="Place the amount to discard here...">
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="modal.close(addToWaste(this.Item, this.ItemID, wasteQuant, this.Item.qntType , this.Item.cost))">Delete and add to waste</button>
+      <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="modal.close(deleteItem(this.ItemID))" > Delete Without Waste</button>
+    </div>
+  </ng-template>
+  
+ 
+  <button class="btn btn-danger" (click)="open(content)"><i class="fa fa-close"></i></button>
+  <hr>
+  
+  <pre>{{closeResult}}</pre>

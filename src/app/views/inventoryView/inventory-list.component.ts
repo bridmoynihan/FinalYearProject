@@ -10,7 +10,8 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { routerNgProbeToken } from '@angular/router/src/router_module';
 import { AngularFirestore} from '@angular/fire/firestore';
 import { InventoryEditComponent } from './inventory-edit/inventory-edit.component';
-
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { DeleteModalComponent } from './delete-modal.component';
 
 
 @Component({
@@ -42,7 +43,7 @@ export class InventoryListComponent implements OnInit{
   itemToEdit: any = {};
   public selectedItem: any;
 
-  constructor(public inventoryServ: InventoryService, public router: Router, public db: AngularFirestore, public waste: WasteService){
+  constructor(public modal: NgbModal, public inventoryServ: InventoryService, public router: Router, public db: AngularFirestore, public waste: WasteService){
     
     this.inventoryServ.getUID().then(result => {
       this.uid = String(result)
@@ -82,13 +83,8 @@ export class InventoryListComponent implements OnInit{
       for(let i = 0; i<= docList.length-1; i++){
         this.qualityCheck(docList[i], idList[i]);
       }
-    })
-        
-    
-    
-    
+    })  
   }
-  
 
   inventoryExists(){
     
@@ -131,7 +127,6 @@ export class InventoryListComponent implements OnInit{
   }
   updateItem(item, id){
     item.data.isEditable = false;
-    // console.log("updated " + item.itemName + " " + id)
     if(item.itemBarcode == undefined){
       item.itemBarcode = item.data.itemBarcode
     }
@@ -154,7 +149,6 @@ export class InventoryListComponent implements OnInit{
       location: item.location,
       quality: item.quality
     }
-    console.log("updated " + item.location + " " + id)
     this.qualityCheck(update, id);
     this.inventoryServ.updateItem(update, id);
   }
@@ -163,11 +157,9 @@ export class InventoryListComponent implements OnInit{
     this.inventoryServ.deleteItem(docID);
   }
   addToWaste(item, amount, type, cost){
-    console.log("item id " + item.id)
     if(+item.data.quantity <= amount || + item.data.quantity == 0){
       this.deleteItem(item.id);
       let newAmount = amount - +item.data.quantity;
-      console.log("amount to waste: " + newAmount)
       this.waste.createWasteDoc(item, newAmount, type, cost);
       return;
     }
@@ -205,7 +197,6 @@ export class InventoryListComponent implements OnInit{
     let currentDate = new Date().getTime();
     let diff = exptime - currentDate
     let days = Math.round(Math.abs(diff/(1000*60*60*24)))
-    console.log("days left: " + days)
     
     if (days > 29){
       item.quality = "Great"
@@ -216,14 +207,14 @@ export class InventoryListComponent implements OnInit{
       this.inventoryServ.updateItem(item, id)
 
     }
+    else if (days >= 10){
+      item.quality = "Average"
+      this.inventoryServ.updateItem(item, id)
+
+    }
     else if (days <= 5){
       item.quality = "Bad"
       this.inventoryServ.updateItem(item, id)
     }
   }
-  // setSelectedItem(item, modal){
-  //   this.selectedItem = item;
-  //   // .showmodal()
-  //   console.log(this.selectedItem.data.itemName);
-  // }
 }
