@@ -3,22 +3,46 @@
   <div class="card">
     <div class="card-header">
       <div class="card-body">
-        <h5 class="card-title">Special title treatment</h5>
-        <h3>Welcome to Stock-ify</h3>
+          <div class="container">
+              <div class="row">
+              <div class ="col"><div class="card" style="width: 18rem;">
+                  <img class="card-img-top" src="../../../assets/images/foodsmall.jpg" alt="Card image cap">
+                  <div class="card-body">
+                    <h5 class="card-title">Date Tracking <i class="fa fa-calendar" aria-hidden="true"></i></h5>
+                    <p class="card-text">With the help of Stock-ify we can track expiry dates for you to take the pressure off.</p>
+                    
+                  </div>
+                </div></div>
+              <div class="col"><div class="card" style="width: 18rem;">
+                  <img class="card-img-top" src="../../../assets/images/hotel.jpg" alt="Card image cap">
+                  <div class="card-body">
+                    <h5 class="card-title">Daily Specials <i class="fa fa-apple" aria-hidden="true"></i></h5>
+                    <p class="card-text">We can help you remember reorders and give you recipies for ingredients close to expiry.</p>
+                  </div>
+                </div></div>
+                <div class="col"><div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="../../../assets/images/money.jpeg" alt="Card image cap">
+                    <div class="card-body">
+                      <h5 class="card-title">Waste Cost <i class="fa fa-euro" aria-hidden="true"></i></h5>
+                      <p class="card-text">Most importantly we can quantify the cost of waste on your business.</p>
+                    </div>
+                  </div></div>
+              </div>
+              
+                <div class="intro">
+                <h3>Thank you for joining us! </h3>
+                <p>Get started by creating your inventory or managing your existing Inventory</p>
+                <button type="button" class="btn btn-dark" (click)="inventoryButtonClick()">Inventory Management</button>
+              </div>
+            </div>
+        
     </div>
   </div>
+  
 </div>
-<div class="jumbotron jumbotron-fluid">
-  <div class="container">
-    <div *ngIf="!inventoryTrue">
-    <h1 class="display-4">We've noticed you haven't created an inventory yet.</h1>
-    <p class="lead">Click here to create your first inventory system!</p>
-        <button type="button" class="btn btn-dark" (click)="inventoryButtonClick()">Inventory Management</button>
-      </div>
-    <div *ngIf="inventoryTrue">
-      <h1 class="display-4">You have an existing Inventory</h1>
-      <p class="lead">Display Here</p>
-      <button type="button" class="btn btn-dark" (click)="inventoryButtonClick()">Inventory Management</button>
-  </div>
-  </div>
-</div>
+
+
+<div>
+ 
+    
+
