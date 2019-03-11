@@ -19,7 +19,7 @@
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" data-dismiss="modal"
-      (click)="modal.close(addToWaste(this.Item, this.ItemID, wasteQuant, this.Item.qntType , this.Item.cost))">Delete
+      (click)="modal.close(addToWaste(this.Item, this.ItemID, wasteQuant, this.Item.qntType , this.Item.costOfOne))">Delete
       and add to waste</button>
     <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="modal.close(deleteItem(this.ItemID))">
       Delete Without Waste</button>

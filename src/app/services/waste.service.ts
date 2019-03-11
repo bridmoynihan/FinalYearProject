@@ -14,6 +14,7 @@ export class WasteService implements OnInit {
   cost: number;
   amount: string;
   wastes: AngularFirestoreCollection<Waste>;
+  wasteItems: Observable<any[]>;
 
   private CollectRef: AngularFirestoreCollection<Waste>;
   barCode: string;
@@ -23,16 +24,18 @@ export class WasteService implements OnInit {
       this.uid = String(result)
       return this.uid
     });
+    // this.wasteItems = db.collection('waste' + this.uid).valueChanges();
   }
   createWasteDoc(item, amount, type, cost) {
     let dateStr = new Date().toLocaleString()
     let index = dateStr.indexOf(", ")
     let date = dateStr.substr(0, index)
+    let costOfWaste = +cost * +amount
     this.wastes = this.db.collection<Waste>('waste' + this.uid)
     let waste = {
       itemBarcode: item.itemBarcode,
       itemName: item.itemName,
-      cost: cost,
+      cost: costOfWaste,
       amount: amount,
       qntType: type,
       entryDate: String(date)
@@ -51,11 +54,23 @@ export class WasteService implements OnInit {
       snap => {
         snap.docs.forEach(doc => {
           amountList.push(doc.data().amount)
-          dateList.push(doc.data().entryDate)
-          costList.push(doc.data().cost)
+          //dateList.push(doc.data().entryDate)
+          costList.push([doc.data().cost, doc.data().entryDate])
         });
-        return {amountList, dateList, costList} ;  
+        return {amountList, costList} ;  
       });
+    }
+
+    getWasteItem(){
+      return this.wasteItems = this.db.collection('waste' + this.uid).snapshotChanges().pipe(
+        map(actions => {
+          return actions.map( doc => {
+            const data = doc.payload.doc.data() as Waste;
+            const id = doc.payload.doc.id;
+            return {id, data};
+          })
+        })
+      )
     }
 
   ngOnInit(): any {
