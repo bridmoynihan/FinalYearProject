@@ -65,7 +65,6 @@ export class InventoryService implements OnInit {
           if (doc.exists) {
             return true;
           } else {
-            console.log('doc doesnt exist')
             return false;
           }
         }

@@ -37,7 +37,6 @@ export class InventoryListComponent implements OnInit{
   public cost?: string;
   public quality?: string;
   public wasteAmount: number;
-  // public quality?: string;
 
   editMode: boolean = false;
   itemToEdit: any = {};
