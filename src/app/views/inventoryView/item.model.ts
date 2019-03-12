@@ -10,7 +10,9 @@ export class Item {
   public quantity?: string,
   public qntType?: string,
   public cost?: string,
-  public quality?: string
+  public quality?: string,
+  public reorder?: number,
+  public needsReorder?: boolean
 
     ){}
 }

@@ -44,7 +44,7 @@
             </td>
             <td *ngIf="!item.data.isEditable">{{item.data.cost | currency:'EUR':true}}</td>
             <td>{{item.data.quantity}}</td>
-            <td><span class="badge badge-pill badge-warning">{{item.data.quality}}</span></td>
+            <td><span class="badge badge-pill badge-warning">{{item.data.quality}}</span><span *ngIf="item.data.needsReorder" class="badge badge-pill badge-info">{{this.reorderText}}</span></td>
             <td>
               <div *ngIf="item.data.isEditable">
                 <button class="btn btn-success" (click)="updateItem(item, item.id)">
@@ -59,7 +59,7 @@
               <button class="btn btn-success setTrue" (click)="setEdit(item, true)">
                 <i class="fa fa-edit"></i>
               </button>
-              <app-delete-modal [Item]="item.data" [ItemID]="item.id"></app-delete-modal>
+              <app-delete-modal (notify)='onNotify($event)' [Item]="item.data" [ItemID]="item.id"></app-delete-modal>
             </div>
           </span> 
             </td>

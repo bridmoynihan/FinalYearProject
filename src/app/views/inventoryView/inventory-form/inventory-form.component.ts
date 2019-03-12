@@ -20,10 +20,11 @@ export class InventoryFormComponent implements OnInit {
   qntType?: string;
   cost?: string;
   quality?: string; //set to good initially but as current is greater than or equal to expiry date then it turns to bad
-  
+  reorder?: number;
   public editMode: boolean = true;
   itemToEdit: any = {};
 
+  needsReorder: boolean = false;
   validForm: boolean;
   entryDate: number= Date.now();
 
@@ -46,6 +47,8 @@ export class InventoryFormComponent implements OnInit {
        qntType: String(this.qntType),
        cost: String(this.cost),
        quality: String(this.quality),
+       reorder: this.reorder,
+       needsReorder: false,
        costOfOne: costOfOne
       };
         this.inventoryService.addItem(item)
@@ -61,6 +64,7 @@ export class InventoryFormComponent implements OnInit {
        this.qntType = ""
       this.cost = ""
       this.quality = ""
+      this.reorder = null
     }
 
     closeItem(){

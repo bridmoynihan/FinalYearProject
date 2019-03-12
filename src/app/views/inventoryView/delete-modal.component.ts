@@ -1,5 +1,5 @@
 import { Item } from './item.model';
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { AngularFirestore} from '@angular/fire/firestore';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { WasteService } from './../../services/waste.service';
@@ -15,6 +15,9 @@ import {InventoryService} from '../../services/inventory.service';
     closeResult: string;
     uid: string;
     wasteQuant: number;
+    needsReorder: boolean = false
+
+    @Output() notify: EventEmitter<any> = new EventEmitter<any>();
 
     constructor(private modalService: NgbModal, public inventoryServ: InventoryService, public db: AngularFirestore, public waste: WasteService) {
       this.inventoryServ.getUID().then(result => {
@@ -44,6 +47,12 @@ import {InventoryService} from '../../services/inventory.service';
         return;
       }
       let newAmount = +item.quantity - wasteQuant;
+      if(newAmount <= +item.reorder){
+        item.needsReorder = true;
+        let data = {item, ItemID}
+        this.notify.emit(data);
+        // console.log("reorder" + this.needsReorder)
+      }
       this.waste.createWasteDoc(item, wasteQuant, type, cost);
       let doc = this.db.collection('inventory' + this.uid).doc(ItemID).update({
         "quantity": newAmount,

@@ -37,11 +37,21 @@ export class InventoryListComponent implements OnInit{
   public qntType?: string;
   public cost?: string;
   public quality?: string;
+  public reorder?: number
   public wasteAmount: number;
-
+  
+  needsReorder = false;
+  reorderText: String = "Reorder"
   editMode: boolean = false;
   itemToEdit: any = {};
   public selectedItem: any;
+
+  onNotify(data:any):void {
+    console.log("notified")
+    // this.needsReorder = true;
+    data.item.needsReorder = true;
+    this.updateItem(data.item, data.ItemID)
+  }
 
   constructor(public modal: NgbModal, public inventoryServ: InventoryService, public router: Router, public db: AngularFirestore, public waste: WasteService){
     
@@ -93,6 +103,12 @@ export class InventoryListComponent implements OnInit{
     }
   }
 
+  setReorder(item){
+    item.item.reorder = true;
+    this.updateItem(item.item, item.ItemID)
+    return;
+  }
+
   gotoForm(){
     this.router.navigateByUrl('inventory-form')
   }
@@ -120,6 +136,8 @@ export class InventoryListComponent implements OnInit{
        qntType: this.qntType,
        cost: this.cost,
        quality: this.quality,
+       reorder: this.reorder,
+       needsReorder: this.needsReorder,
        costOfOne: costOfOne
       };
       if(!this.editMode){
@@ -129,7 +147,10 @@ export class InventoryListComponent implements OnInit{
     }
   }
   updateItem(item, id){
-    item.data.isEditable = false;
+    console.log("updating..." + this.needsReorder)
+    if(item.isEditable){
+      item.isEditable = false;
+    } 
     if(item.itemBarcode == undefined){
       item.itemBarcode = item.data.itemBarcode
     }
@@ -145,12 +166,16 @@ export class InventoryListComponent implements OnInit{
     if(item.quality == undefined){
       item.quality = item.data.quality
     }
+    if(item.needsReorder == undefined){
+      item.needsReorder = false
+    }
     let update = {
       itemBarcode: item.itemBarcode,
       itemName: item.itemName,
       expiryDate: item.expiryDate,
       location: item.location,
-      quality: item.quality
+      quality: item.quality,
+      needsReorder: this.needsReorder
     }
     this.qualityCheck(update, id);
     this.inventoryServ.updateItem(update, id);
@@ -160,7 +185,8 @@ export class InventoryListComponent implements OnInit{
     this.inventoryServ.deleteItem(docID);
   }
   addToWaste(item, amount, type, cost){
-    if(+item.data.quantity <= amount || + item.data.quantity == 0){
+    console.log("generating...")
+    if(+item.data.quantity <= amount || +item.data.quantity == 0){
       this.deleteItem(item.id);
       let newAmount = amount - +item.data.quantity;
       this.waste.createWasteDoc(item, newAmount, type, cost);
@@ -172,6 +198,8 @@ export class InventoryListComponent implements OnInit{
       "quantity": newAmount,
     });
   }
+
+  checkReorder(){}
 
   getBarcode(){
     return this.inventoryServ.getBarcode().then(result => {
@@ -200,7 +228,6 @@ export class InventoryListComponent implements OnInit{
     let currentDate = new Date().getTime();
     let diff = exptime - currentDate
     let days = Math.round(Math.abs(diff/(1000*60*60*24)))
-    console.log("item quality " + days)
     if (days > 29){
       item.quality = "Great"
       this.inventoryServ.updateItem(item, id)
