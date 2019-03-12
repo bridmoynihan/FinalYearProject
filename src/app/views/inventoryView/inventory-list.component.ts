@@ -147,7 +147,6 @@ export class InventoryListComponent implements OnInit{
     }
   }
   updateItem(item, id){
-    console.log("updating..." + this.needsReorder)
     if(item.isEditable){
       item.isEditable = false;
     } 

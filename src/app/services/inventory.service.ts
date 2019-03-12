@@ -78,8 +78,7 @@ export class InventoryService implements OnInit {
     this.items.add(item);
   }
 
-  updateItem(update, docID){
-    console.log("update value" + update.needsReorder)   
+  updateItem(update, docID){  
     this.itemDoc = this.db.doc<Item>('inventory' + this.uid + `/${docID}`)
     this.itemDoc.update({
       itemName: update.itemName,
