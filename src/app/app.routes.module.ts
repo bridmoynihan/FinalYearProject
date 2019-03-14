@@ -1,3 +1,4 @@
+import { RecipeViewComponent } from './views/recipeView/recipe-view.component';
 import { WasteViewComponent } from './views/wasteView/waste-view.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes, CanActivate } from '@angular/router';
@@ -35,6 +36,11 @@ const appRoutes: Routes = [
     path: 'waste-view',
     canActivate: [AuthGuardService],
     component: WasteViewComponent
+  },
+  {
+    path: 'recipe-view',
+    canActivate: [AuthGuardService],
+    component: RecipeViewComponent
   },
   {
     path: 'inventory-edit',

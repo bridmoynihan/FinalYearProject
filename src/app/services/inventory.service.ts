@@ -98,6 +98,17 @@ export class InventoryService implements OnInit {
   });;
   }
 
+  getBadItems(){
+    let ingredientList = []
+    return this.db.collection<Item>('inventory' + this.uid, ref => ref.where("quality", "==", "Bad"))
+    .ref.get().then(snap => {
+      snap.forEach(doc => {
+        ingredientList.push(doc.data().itemName)
+      })
+      return ingredientList
+    })
+  }
+
   getUID(){
     var promise = new Promise(resolve => {
       this.afAuth.authState.subscribe(

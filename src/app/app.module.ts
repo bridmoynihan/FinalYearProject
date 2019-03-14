@@ -1,4 +1,3 @@
-import { DeleteModalComponent } from './views/inventoryView/delete-modal.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -26,12 +25,15 @@ import {InventoryListComponent} from './views/inventoryView/inventory-list.compo
 import { WasteGraphComponent } from './views/wasteView/waste-graph.component';
 import { InventoryEditComponent } from './views/inventoryView/inventory-edit/inventory-edit.component';
 import { WasteViewComponent } from './views/wasteView/waste-view.component';
+import { RecipeViewComponent } from './views/recipeView/recipe-view.component';
+import { DeleteModalComponent } from './views/inventoryView/delete-modal.component';
 
 import { AuthService } from './services/auth.service';
 import { AuthGuardService } from './services/auth-guard.service';
 import {InventoryService} from './services/inventory.service';
 import {WasteService} from './services/waste.service';
 import { PlotlyModule } from 'angular-plotly.js';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,7 +45,8 @@ import { PlotlyModule } from 'angular-plotly.js';
     WasteGraphComponent,
     WasteViewComponent,
     InventoryEditComponent,  //can remove this
-    DeleteModalComponent
+    DeleteModalComponent,
+    RecipeViewComponent
   
   ],
   imports: [
