@@ -29,13 +29,39 @@
 
                     </tr>
                 </thead>
+                <tbody>
+                    <tr *ngFor="let waste of wasteItems | async;">
+                        <td>
+                            {{waste.data.itemBarcode}}
+                        </td>
+                        <td>
+                            {{waste.data.itemName}}
+                        </td>
+                        <td>
+                            {{waste.data.entryDate}}
+                        </td>
+                        <td>
+                            {{waste.data.amount}}
+                        </td>
+                        <td>
+                            {{waste.data.qntType}}
+                        </td>
+                        <td>
+                            {{waste.data.cost | currency:'EUR':true}}
+                        </td>
+
+                    </tr>
+                </tbody>
             </table>
         </div>
         <div class="tab-pane" id="2a">
             <app-waste-graph></app-waste-graph>>
         </div>
         <div class="tab-pane" id="3a">
-            <h3>We applied clearfix to the tab-content to rid of the gap between the tab and the content</h3>
+            <h3>{{this.kgAmount}} Kilograms</h3>
+            <h3>{{this.gramsAmount}} Grams</h3>
+            <h3>{{this.lbsAmount}} Pounds</h3>
+            <h3>{{this.ltrsAmount}} Liters</h3>
         </div>
     </div>
 </div>

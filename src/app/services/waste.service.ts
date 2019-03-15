@@ -10,11 +10,18 @@ import { InventoryService } from '../services/inventory.service';
 export class WasteService implements OnInit {
 
   itemDoc: AngularFirestoreDocument<Waste>;
+  kgAmount: number
+  gramsAmount: number
+  lbsAmount: number
+  ltrsAmount: number
+  totalCost: number
   uid: string;
   cost: number;
   amount: string;
   wastes: AngularFirestoreCollection<Waste>;
   wasteItems: Observable<any[]>;
+  public monthList = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+  public today = new Date().toLocaleString()
 
   private CollectRef: AngularFirestoreCollection<Waste>;
   barCode: string;
@@ -24,29 +31,102 @@ export class WasteService implements OnInit {
       this.uid = String(result)
       return this.uid
     });
-    // this.wasteItems = db.collection('waste' + this.uid).valueChanges();
+    this.getData().then(docs => {
+      this.generateTotals(docs)
+    })
   }
   createWasteDoc(item, amount, type, cost) {
     let dateStr = new Date().toLocaleString()
     let index = dateStr.indexOf(", ")
     let date = dateStr.substr(0, index)
     let costOfWaste = +cost * +amount
-    this.wastes = this.db.collection<Waste>('waste' + this.uid)
+    let month = this.monthList[+this.today[0]-1]
     let waste = {
       itemBarcode: item.itemBarcode,
       itemName: item.itemName,
       cost: costOfWaste,
       amount: amount,
       qntType: type,
-      entryDate: String(date)
+      entryDate: String(date),
+      Month: month
     }
-    this.wastes.add(waste)
+    console.log("month is " + month)
+    let docRef = this.db.collection<Waste>('waste' + this.uid).add(waste)
     console.log("waste created added to database")
   }
 
+  createTotalDoc(total){
+    console.log("creating your total doc")
+   
+   let totalDoc = this.db.collection("totalWaste" + this.uid).doc(this.monthList[+this.today[0]-1]).ref.get().then( snap => {
+      if(snap.exists){
+        this.db.collection("totalWaste" + this.uid).doc(this.monthList[+this.today[0]-1]).update(total)
+        console.log("updating your total doc")
+      }
+      else {
+        this.db.collection("totalWaste" + this.uid).doc(this.monthList[+this.today[0]-1]).set(total)
+        console.log("total doc generated")
+      }
+   })
+  }
+
+  generateTotals(docs){
+    this.kgAmount = 0
+    this.gramsAmount = 0
+    this.lbsAmount = 0
+    this.ltrsAmount = 0
+    this.totalCost = 0
+    console.log("generating totals")
+    for(let i =0; i< docs.qntList.length; i++){
+      if(docs.qntList[i][2][0] == this.today[0]){
+        if(docs.qntList[i][1] == "kgs"){
+          this.kgAmount = this.kgAmount + +docs.qntList[i][0]
+        }
+        else if (docs.qntList[i][1] == "grams"){
+          this.gramsAmount = this.gramsAmount + +docs.qntList[i][0]
+        }
+        else if (docs.qntList[i][1] == "lbs"){
+          this.lbsAmount = this.lbsAmount + +docs.qntList[i][0]
+        }
+        else if (docs.qntList[i][1] == "ltrs"){
+          this.ltrsAmount = this.ltrsAmount + +docs.qntList[i][0]
+        }  
+        
+      }
+    }
+      for(let x = 0; x< docs.costList.length; x++){
+        this.totalCost = this.totalCost + +docs.costList[x][0]
+        console.log("cost " + this.totalCost)
+      } 
+    let total = {
+      totalCost: this.totalCost,
+      kgAmount: this.kgAmount,
+      gramsAmount: this.gramsAmount,
+      lbsAmount: this.lbsAmount,
+      ltrsAmount: this.ltrsAmount
+    }
+
+    this.createTotalDoc(total)
+
+  }
+
+  getMonths(){
+    let monthDocs = []
+    let totalDocs = []
+    let months = this.db.collection('totalWasteveWj2VNOz5RFoX1lGl4TWEQaXGq1')
+    return months.ref.get().then(snap =>{
+      snap.docs.forEach(doc => {
+        monthDocs.push(doc.id)
+        totalDocs.push(doc.data().totalCost)   
+      })
+      return {monthDocs, totalDocs}
+    })
+  }
+
+
   getData() {
     let amountList = []
-    let dateList = []
+    let qntList = []
     let costList = []
     this.wastes = this.db.collection<Waste>('wasteveWj2VNOz5RFoX1lGl4TWEQaXGq1')
     console.log("is uid defined " + this.uid)
@@ -54,14 +134,15 @@ export class WasteService implements OnInit {
       snap => {
         snap.docs.forEach(doc => {
           amountList.push(doc.data().amount)
-          //dateList.push(doc.data().entryDate)
           costList.push([doc.data().cost, doc.data().entryDate])
+          qntList.push([doc.data().amount, doc.data().qntType, doc.data().entryDate])
         });
-        return {amountList, costList} ;  
+        return {amountList, costList, qntList} ;  
       });
     }
 
     getWasteItem(){
+      console.log("uid" + this.uid)
       return this.wasteItems = this.db.collection('waste' + this.uid).snapshotChanges().pipe(
         map(actions => {
           return actions.map( doc => {
@@ -74,11 +155,14 @@ export class WasteService implements OnInit {
     }
 
   ngOnInit(): any {
-
+    console.log("onint")
     this.inventoryServ.getUID().then(result => {
       this.uid = String(result)
       return this.uid
     });
 
+    this.getData().then(docs => {
+      this.generateTotals(docs)
+    })
   }
 }
