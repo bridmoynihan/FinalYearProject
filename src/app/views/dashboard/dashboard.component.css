@@ -7,11 +7,44 @@
 #user-profile {
   margin-left:auto;
   margin-right:0;
-} */
+}
 
-/* .container {
-  padding-left: 200px;
-} */
+.carousel-caption {
+  /* background-color: #343A40; */
+  color: darkorange;
+  /* opacity: .8; */
+}
+
+.carousel {
+  margin: auto;
+  width:1120px;
+  height:768px;
+}
+.d-block {
+  width:1120px;
+  height:768px;
+}
+
+.fixed-footer {
+  height: 40px;
+  top:0px;
+  width: 100%;
+  background-color: #343A40;
+  bottom: 0;
+}
+
+.cr {
+  color: white!important;
+  text-align: center;
+}
+
+.card {
+  background-color: antiquewhite;
+}
+
+.row {
+  margin-top: 10px;
+}
 
 .intro {
   margin: auto;
@@ -23,7 +56,6 @@
 }
 .jumbotron {
   height:100%;
-  /*padding: 17rem 2rem!important;*/
 }
 
 .navbar-login

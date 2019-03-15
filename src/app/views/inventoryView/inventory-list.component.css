@@ -5,3 +5,26 @@
 td {
     padding-top: 6px;
 }
+
+.container {
+  height:100%;
+  background-color: antiquewhite;
+  margin-top: 30px;
+}
+
+th {
+  color: darkorange;
+}
+
+.fixed-footer {
+  height: 40px;
+  top:0px;
+  width: 100%;
+  background-color: #343A40;
+  bottom: 0;
+}
+
+.cr {
+  color: white!important;
+  text-align: center;
+}

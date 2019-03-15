@@ -35,13 +35,14 @@ body {
   padding-left: 7px;
   padding-right:7px;
 }
-.btn-primary .a:active {
+.btn-primary:not(:disabled):not(.disabled):active {
   background-color: darkorange;
 }
 
 .btnText {
   color: #343A40;
 }
+
 
 .footer-copyright {
   color: white!important;
