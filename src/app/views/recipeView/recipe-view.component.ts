@@ -19,8 +19,9 @@ interface Recipe {
     styleUrls: ['./recipe-view.component.css']
   })
   export class RecipeViewComponent implements OnInit {
-    recipeList: Observable<Recipe>;
-    private requestString = "https://cors-anywhere.herokuapp.com/http://www.recipepuppy.com/api/?i=" 
+    public recipeList = [];
+    public items;
+    private requestString = "https://thingproxy.freeboard.io/fetch/http://www.recipepuppy.com/api/?i=" 
     public ingredientList = []
     constructor(public inventServ: InventoryService, public http: Http){}
 
@@ -38,21 +39,15 @@ interface Recipe {
       String(ingredient)
     )
     this.requestString = this.requestString + ingredientString;
-    return this.http.get(this.requestString).map(data => data.json())
+    return this.http.get(this.requestString).map(data => data.json().results)
   }
 
 
   ngOnInit() {
     this.getIngredientList().then(list => {
-      this.getRecipeList(list).subscribe(
-        recipe => {
-          //use recipe information here!!
-          console.log("recipies are ", recipe.results)
-        },
-        error => console.log("error is " + error),
-        () => console.log("Complete!")
+     this.items = this.getRecipeList(list)
+      }
       )
-    })
   }
      
 }

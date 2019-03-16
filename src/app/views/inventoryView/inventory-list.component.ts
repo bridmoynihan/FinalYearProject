@@ -47,8 +47,6 @@ export class InventoryListComponent implements OnInit{
   public selectedItem: any;
 
   onNotify(data:any):void {
-    console.log("notified")
-    // this.needsReorder = true;
     data.item.needsReorder = true;
     this.updateItem(data.item, data.ItemID)
   }
@@ -115,7 +113,6 @@ export class InventoryListComponent implements OnInit{
 
   setEdit(item, bool) {
     item.data.isEditable = bool;
-    console.log(item.data.itemName)
 
   }
 
@@ -123,7 +120,6 @@ export class InventoryListComponent implements OnInit{
     //make cost required
     if(this.itemName && this.itemBarcode && this.expiryDate !== null){
       let costOfOne = +this.cost/+this.quantity
-      console.log("cost of one " + costOfOne)
       let item = {
        itemBarcode: this.itemBarcode,
        itemName: this.itemName,
@@ -141,7 +137,6 @@ export class InventoryListComponent implements OnInit{
        costOfOne: costOfOne
       };
       if(!this.editMode){
-        console.log(item)
         this.inventoryServ.addItem(item)
       }
     }
@@ -184,7 +179,6 @@ export class InventoryListComponent implements OnInit{
     this.inventoryServ.deleteItem(docID);
   }
   addToWaste(item, amount, type, cost){
-    console.log("generating...")
     if(+item.data.quantity <= amount || +item.data.quantity == 0){
       this.deleteItem(item.id);
       let newAmount = amount - +item.data.quantity;
@@ -216,7 +210,6 @@ export class InventoryListComponent implements OnInit{
       this.barCode = String(result);
       doclist = this.inventoryServ.displayInventoryList(this.barCode)
     })
-    console.log(doclist[0]);
   }
   inventoryButtonClick(){
     this.router.navigateByUrl('/inventory-form');
@@ -243,6 +236,10 @@ export class InventoryListComponent implements OnInit{
     }
     else if (days < 10){
       item.quality = "Bad"
+      this.inventoryServ.updateItem(item, id)
+    }
+    else if (days <= 0){
+      item.quality = "Expired"
       this.inventoryServ.updateItem(item, id)
     }
   }

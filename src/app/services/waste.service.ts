@@ -155,7 +155,6 @@ export class WasteService implements OnInit {
     }
 
   ngOnInit(): any {
-    console.log("onint")
     this.inventoryServ.getUID().then(result => {
       this.uid = String(result)
       return this.uid
