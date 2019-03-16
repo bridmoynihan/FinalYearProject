@@ -1,7 +1,14 @@
 .card {
+    margin-bottom: 10px;
     color: darkorange;
     background-color: #343A40;
 }
 .container {
     margin-top: 15px;
+}
+
+.btn {
+    background-color: darkorange;
+    color: #343A40;
+    border-color: darkorange;
 }

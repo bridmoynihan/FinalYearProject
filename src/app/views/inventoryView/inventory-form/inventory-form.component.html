@@ -1,5 +1,5 @@
 <app-navbar></app-navbar>
-<h3>today's date: {{entryDate  | date: 'dd/MM/yyyy'}}</h3>
+<div class="container">
 <div *ngIf="this.validForm">
 <div class="alert alert-success" role="alert">
   Item has been added to the inventory, you can continue to add more!
@@ -42,10 +42,10 @@
         </div>
         <div class="form-group col-md-4">
             <label for="inputQuantity">Reorder Point</label>
-            <input type="text" class="form-control" id="inputReorder" [(ngModel)]="reorder" placeholder="5">
+            <input type="text" class="form-control" id="inputReorder" [(ngModel)]="reorder" placeholder="5" required="required">
           </div>
         <div class="form-group col-md-2">
-          <label for="inputType">Type</label>
+          <label for="inputType">Unit</label>
           <select id="inputType" [(ngModel)]="qntType" class="form-control" required="required">
             <option selected>Choose Quantity Type...</option>
             <option>kgs</option>
@@ -55,23 +55,14 @@
             <option>unit</option>
           </select>
         </div>
-        <div class="form-group col-md-2">
-          <label for="inputType">Quality</label>
-          <select id="inputType" [(ngModel)]="quality" class="form-control">
-            <option selected>Choose Quality Type...</option>
-            <option>Great</option>
-            <option>Good</option>
-            <option>Average</option>
-            <option>Bad</option>
-          </select>
-        </div>
         <div class="form-group">
           <label for="inputCost">Cost</label>
           <input type="number" class="form-control" id="inputCost" [(ngModel)]="cost" required="required">
         </div>
       </div>
-      <button type="button" class="btn btn-primary" (click)="saveItem()"> Add Item to Inventory</button>
-      <button type="button" class="btn btn-secondary" (click)="closeItem()"> Cancel</button>
+      <button type="button" class="add btn btn-primary" (click)="saveItem()"> Add Item to Inventory</button>
+      <button type="button" class="cancel btn btn-secondary" (click)="closeItem()"> Cancel</button>
     </form>
   </div>
+</div>
 </div>

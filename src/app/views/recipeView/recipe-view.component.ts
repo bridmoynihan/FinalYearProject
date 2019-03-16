@@ -7,12 +7,6 @@ import {Http} from '@angular/http'
 import { ValueTransformer } from '@angular/compiler/src/util';
 import * as _ from 'lodash';
 
-interface Recipe {
-  title: string;
-  thumbnail:string;
-}
-
-
 @Component({
     selector: 'app-recipe-view',
     templateUrl: './recipe-view.component.html',
@@ -25,29 +19,25 @@ interface Recipe {
     public ingredientList = []
     constructor(public inventServ: InventoryService, public http: Http){}
 
-  getIngredientList(){
-    return this.inventServ.getBadItems().then(ingredient => {
-      for(let x=0; x<ingredient.length; x++){
-          this.ingredientList.push(String(ingredient[x]))
-      }
-      return this.ingredientList
-  })
-  
-}
   getRecipeList(ingredientList){
-    let ingredientString = this.ingredientList.map(ingredient => 
+    let ingredientString = ingredientList.map(ingredient => 
       String(ingredient)
     )
+    console.log("ingredient string " + ingredientString)
     this.requestString = this.requestString + ingredientString;
     return this.http.get(this.requestString).map(data => data.json().results)
   }
 
 
   ngOnInit() {
-    this.getIngredientList().then(list => {
-     this.items = this.getRecipeList(list)
-      }
-      )
+    let ingredList = []
+    this.inventServ.getBadItemsRef().subscribe(
+      data => {
+        data.forEach(doc => {
+          ingredList.push(doc.itemName)
+        })
+        this.items = this.getRecipeList(ingredList)
+      })
   }
      
 }

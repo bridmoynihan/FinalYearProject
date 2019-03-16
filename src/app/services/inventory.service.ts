@@ -5,15 +5,12 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs'
 
-// export interface Item {
-//   id: string;
-// }
-
 @Injectable()
 export class InventoryService implements OnInit {
   items: AngularFirestoreCollection<Item>;
   itemDoc: AngularFirestoreDocument<Item>;
   uid: string;
+  ingredList = []
  
   private CollectRef: AngularFirestoreCollection<Item>;
   barCode: string;
@@ -52,7 +49,7 @@ export class InventoryService implements OnInit {
     })
     .catch(function(error) {
       console.error("Error writing document: ", error);
-    });;;
+    });
   }
 
   inventoryExists(barcode): any {
@@ -98,15 +95,8 @@ export class InventoryService implements OnInit {
   });;
   }
 
-  getBadItems(){
-    let ingredientList = []
-    return this.db.collection<Item>('inventory' + this.uid, ref => ref.where("quality", "==", "Bad"))
-    .ref.get().then(snap => {
-      snap.forEach(doc => {
-        ingredientList.push(doc.data().itemName)
-      })
-      return ingredientList
-    })
+  getBadItemsRef(){
+    return this.db.collection<Item>('inventory' + this.uid, reference => reference.where('quality', '==', 'Bad')).valueChanges()
   }
 
   getUID(){

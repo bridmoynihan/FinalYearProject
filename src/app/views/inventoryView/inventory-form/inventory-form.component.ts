@@ -33,7 +33,7 @@ export class InventoryFormComponent implements OnInit {
    }
 
   saveItem(){
-    if(this.itemName && this.itemBarcode && this.expiryDate !== null){
+    if(this.itemName && this.itemBarcode && this.expiryDate && this.cost && this.reorder && this.quantity !== null){
       let costOfOne = +this.cost/+this.quantity
       console.log("cost of one " + costOfOne)
       let item = {

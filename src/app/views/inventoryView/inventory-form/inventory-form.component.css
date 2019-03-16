@@ -1,5 +1,22 @@
 .card {
-  margin: 0 auto; /* Added */
-  float: none; /* Added */
-  margin-bottom: 10px; /* Added */
+  margin: 0 auto; 
+  float: none; 
+  margin-bottom: 10px; 
+}
+
+.cancel {
+  background-color: #343A40;
+  color: darkorange;
+  margin-left: 10px;
+  border-color: darkorange;
+}
+
+.container {
+  margin-top: 15px;
+}
+
+.add {
+  background-color: darkorange;
+  color: #343A40;
+  border-color: #343A40;
 }
