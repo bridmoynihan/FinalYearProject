@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
   })
 
   export class WasteViewComponent implements OnInit {
+    public graph 
     wasteItems: Observable<any[]>
     kgAmount: number
     gramsAmount: number
@@ -17,8 +18,15 @@ import { Observable } from 'rxjs';
     ltrsAmount: number
     dataList: Observable<any[]>
     constructor(public wasteServ: WasteService){
+        this.setGraph(this.kgAmount, this.gramsAmount, this.lbsAmount, this.ltrsAmount)
       
     }
+    setGraph(kgAmount, gramsAmount, lbsAmount, ltrsAmount){
+      this.graph = {
+          data: [{ values: [this.kgAmount, this.gramsAmount, this.lbsAmount, this.ltrsAmount], labels: ["Kilogram Wasted", "Grams Wasted", "Pounds Wasted", "Liters Wasted"], type: 'pie'}],
+          layout: {width:1020, height:720, title:"Waste Graph: Amounted Wasted Per Month", margin: 'auto'}
+      }
+  }
 
     getAmounts(list){
       this.kgAmount = 0
@@ -39,6 +47,7 @@ import { Observable } from 'rxjs';
           this.ltrsAmount = this.ltrsAmount + +list[i][0]
         }  
       }
+      this.setGraph(this.kgAmount, this.gramsAmount, this.lbsAmount, this.ltrsAmount)
     }
 
     ngOnInit(){

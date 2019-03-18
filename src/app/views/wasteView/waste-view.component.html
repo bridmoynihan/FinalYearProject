@@ -58,10 +58,7 @@
             <app-waste-graph></app-waste-graph>>
         </div>
         <div class="tab-pane" id="3a">
-            <h3>{{this.kgAmount}} Kilograms</h3>
-            <h3>{{this.gramsAmount}} Grams</h3>
-            <h3>{{this.lbsAmount}} Pounds</h3>
-            <h3>{{this.ltrsAmount}} Liters</h3>
+            <plotly-plot [data]="graph.data" [layout]="graph.layout"></plotly-plot>
         </div>
     </div>
 </div>

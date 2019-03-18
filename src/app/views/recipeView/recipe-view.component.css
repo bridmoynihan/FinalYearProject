@@ -12,3 +12,8 @@
     color: #343A40;
     border-color: darkorange;
 }
+
+.btn-primary:hover {
+    background-color: orange;
+    border-color: orange;
+}
