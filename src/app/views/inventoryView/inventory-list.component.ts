@@ -142,6 +142,7 @@ export class InventoryListComponent implements OnInit{
     }
   }
   updateItem(item, id){
+    console.log("updating to " + item.quantity)
     if(item.isEditable){
       item.isEditable = false;
     } 
@@ -168,6 +169,7 @@ export class InventoryListComponent implements OnInit{
       itemName: item.itemName,
       expiryDate: item.expiryDate,
       location: item.location,
+      quantity: item.quantity,
       quality: item.quality,
       needsReorder: this.needsReorder
     }

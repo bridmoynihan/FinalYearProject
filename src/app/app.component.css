@@ -15,5 +15,9 @@
 }
 
 html {
-  background-color: antiquewhite;
+  background-color: aliceblue !important;
+}
+
+body {
+  background-color: aliceblue !important;
 }

@@ -50,22 +50,17 @@ export class WasteService implements OnInit {
       entryDate: String(date),
       Month: month
     }
-    console.log("month is " + month)
     let docRef = this.db.collection<Waste>('waste' + this.uid).add(waste)
-    console.log("waste created added to database")
   }
 
   createTotalDoc(total){
-    console.log("creating your total doc")
    
    let totalDoc = this.db.collection("totalWaste" + this.uid).doc(this.monthList[+this.today[0]-1]).ref.get().then( snap => {
       if(snap.exists){
         this.db.collection("totalWaste" + this.uid).doc(this.monthList[+this.today[0]-1]).update(total)
-        console.log("updating your total doc")
       }
       else {
         this.db.collection("totalWaste" + this.uid).doc(this.monthList[+this.today[0]-1]).set(total)
-        console.log("total doc generated")
       }
    })
   }
@@ -76,7 +71,6 @@ export class WasteService implements OnInit {
     this.lbsAmount = 0
     this.ltrsAmount = 0
     this.totalCost = 0
-    console.log("generating totals")
     for(let i =0; i< docs.qntList.length; i++){
       if(docs.qntList[i][2][0] == this.today[0]){
         if(docs.qntList[i][1] == "kgs"){
@@ -96,7 +90,6 @@ export class WasteService implements OnInit {
     }
       for(let x = 0; x< docs.costList.length; x++){
         this.totalCost = this.totalCost + +docs.costList[x][0]
-        console.log("cost " + this.totalCost)
       } 
     let total = {
       totalCost: this.totalCost,

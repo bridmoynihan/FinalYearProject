@@ -7,7 +7,8 @@ import {InventoryService} from '../../services/inventory.service';
 
 @Component({
     selector: 'app-delete-modal',
-    templateUrl: 'delete-modal.component.html'
+    templateUrl: 'delete-modal.component.html',
+    styleUrls: ['./delete-modal.component.css']
   })
   export class DeleteModalComponent {
     @Input() Item: Item;
@@ -57,5 +58,36 @@ import {InventoryService} from '../../services/inventory.service';
       let doc = this.db.collection('inventory' + this.uid).doc(ItemID).update({
         "quantity": newAmount,
       });
+    }
+    removeQuant(item, itemID, quant){
+      console.log("quant is " + quant)
+      if(+item.quantity <= quant || +item.quantity == 0){
+        this.deleteItem(itemID);
+        return
+      }
+      let newAmount = +item.quantity - quant;
+      if(newAmount <= +item.reorder){
+        item.needsReorder = true;
+        let data = {item, itemID}
+        this.notify.emit(data);
+      }
+      console.log("quality is " + item.quality)
+      let newDoc = {
+        itemBarcode: item.itemBarcode,
+        itemName: item.itemName,
+        expiryDate: item.expiryDate,
+        location: item.location,
+        locationBarcode: item.locationBarcode,
+        reorder: item.reorder,
+        needsReorder: item.needsReorder,
+        quality: item.quality,
+        cost: item.cost,
+        quantity: newAmount,
+        qntType: item.type,
+        
+      }
+      console.log("item quant is now " + newDoc.quantity)
+      this.inventoryServ.updateItem(newDoc, itemID)
+
     }
   }

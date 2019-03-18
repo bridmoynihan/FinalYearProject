@@ -21,7 +21,6 @@ export class InventoryService implements OnInit {
         if (user) {
           this.uid = user.uid;
           this.items = this.db.collection<Item>('inventory' + this.uid)
-          console.log("creating inventory2 " + this.uid);
           return user.uid;
         }
       }
@@ -75,7 +74,8 @@ export class InventoryService implements OnInit {
     this.items.add(item);
   }
 
-  updateItem(update, docID){  
+  updateItem(update, docID){
+    console.log("2 updating to " + update.quantity)  
     this.itemDoc = this.db.doc<Item>('inventory' + this.uid + `/${docID}`)
     this.itemDoc.update({
       itemName: update.itemName,
@@ -83,6 +83,7 @@ export class InventoryService implements OnInit {
       expiryDate: update.expiryDate,
       location: update.location,
       quality: update.quality,
+      quantity: update.quantity,
       needsReorder: update.needsReorder
     });
     

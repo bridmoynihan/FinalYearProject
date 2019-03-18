@@ -19,8 +19,8 @@
 }
 
 .nav-link.active {
-    color: #343A40;
-    background-color: darkorange;
+    color: #343A40 !important;
+    background-color: darkorange !important;
 }
 
 #pills-home-tab {

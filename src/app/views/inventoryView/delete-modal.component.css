@@ -1,0 +1,14 @@
+.modal-header {
+    background-color: darkorange;
+}
+.add {
+    background-color: darkorange;
+    color: #343A40;
+    border-color: darkorange;
+}
+
+.delete {
+    background-color: #343A40;
+    color: darkorange;
+    border-color: #343A40
+}

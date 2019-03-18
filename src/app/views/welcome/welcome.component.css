@@ -36,7 +36,10 @@ body {
   padding-right:7px;
 }
 .btn-primary:not(:disabled):not(.disabled):active {
-  background-color: darkorange;
+  background-color: darkorange !important;
+}
+.btn-primary:hover {
+  background-color: darkorange !important;
 }
 
 .btnText {
