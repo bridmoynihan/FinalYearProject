@@ -49,6 +49,7 @@ export class InventoryFormComponent implements OnInit {
        quality: String(this.quality),
        reorder: this.reorder,
        needsReorder: false,
+       originalQuant: String(this.quantity),
        costOfOne: costOfOne
       };
         this.inventoryService.addItem(item)

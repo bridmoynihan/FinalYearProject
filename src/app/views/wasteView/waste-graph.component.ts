@@ -27,7 +27,7 @@ export class WasteGraphComponent {
     setGraph(xList, yList){
         this.graph = {
             data: [{ x: xList, y: yList, type: 'bar', marker: {color: '#ff8c00'}}],
-            layout: {width:1020, height:720, title:"Waste Graph: Cost of waste per Month", margin: 'auto'}
+            layout: {width:1020, height:720, title:"Waste Graph:€ Wasted Per Month", margin: 'auto'}
         }
     }
 

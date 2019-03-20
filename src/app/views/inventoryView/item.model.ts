@@ -3,6 +3,7 @@ export class Item {
   public itemBarcode: string,
   public itemName: string,
   public expiryDate: Date,
+  public originalQuant: string,
   public isEditable?: false,
   public location?: string,
   public locationBarcode?: string,

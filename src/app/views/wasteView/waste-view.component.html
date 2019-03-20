@@ -14,6 +14,10 @@
             <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#3a" role="tab"
                 aria-controls="pills-contact" aria-selected="false">Amount Chart</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" id="pills-adjust-tab" data-toggle="pill" href="#4a" role="tab"
+                aria-controls="pills-adjust" aria-selected="false">Order Adjustments</a>
+        </li>
     </ul>
     <div class="tab-content clearfix">
         <div class="tab-pane active" id="1a">
@@ -59,6 +63,13 @@
         </div>
         <div class="tab-pane" id="3a">
             <plotly-plot [data]="graph.data" [layout]="graph.layout"></plotly-plot>
+        </div>
+        <div class="tab-pane" id="4a">
+            <ul>
+                <li *ngFor="let item of dict">
+                  {{item.value[0]/item.value[1] * 100/1 | number:'1.0-0'}}% of {{item.key}} was wasted. Re-adjust next order to {{item.value[1] - item.value[0]}}{{item.value[2]}}
+                </li>
+              </ul>
         </div>
     </div>
 </div>

@@ -49,7 +49,8 @@ export class WasteService implements OnInit {
       amount: amount,
       qntType: type,
       entryDate: String(date),
-      Month: month
+      Month: month,
+      originalQuant: item.originalQuant
     }
     let docRef = this.db.collection<Waste>('waste' + this.uid).add(waste)
   }
@@ -123,6 +124,7 @@ export class WasteService implements OnInit {
     let amountList = []
     let qntList = []
     let costList = []
+    let titleQntOrig = []
     this.wastes = this.db.collection<Waste>('wasteveWj2VNOz5RFoX1lGl4TWEQaXGq1')
     console.log("is uid defined " + this.uid)
     return this.wastes.ref.get().then(
@@ -131,8 +133,10 @@ export class WasteService implements OnInit {
           amountList.push(doc.data().amount)
           costList.push([doc.data().cost, doc.data().entryDate])
           qntList.push([doc.data().amount, doc.data().qntType, doc.data().entryDate])
+          titleQntOrig.push([doc.data().itemName, doc.data().amount, doc.data().originalQuant, doc.data().qntType])
+
         });
-        return {amountList, costList, qntList} ;  
+        return {amountList, costList, qntList, titleQntOrig} ;  
       });
     }
 
