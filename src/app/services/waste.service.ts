@@ -25,6 +25,7 @@ export class WasteService implements OnInit {
 
   private CollectRef: AngularFirestoreCollection<Waste>;
   barCode: string;
+  public prefix = 3;
 
   constructor(private db: AngularFirestore, private afAuth: AngularFireAuth, public inventoryServ: InventoryService, ) {
     this.inventoryServ.getUID().then(result => {
@@ -55,12 +56,12 @@ export class WasteService implements OnInit {
 
   createTotalDoc(total){
    
-   let totalDoc = this.db.collection("totalWaste" + this.uid).doc(this.monthList[+this.today[0]-1]).ref.get().then( snap => {
+   let totalDoc = this.db.collection("totalWaste" + this.uid).doc(+this.today[0] + this.monthList[+this.today[0]-1]).ref.get().then( snap => {
       if(snap.exists){
-        this.db.collection("totalWaste" + this.uid).doc(this.monthList[+this.today[0]-1]).update(total)
+        this.db.collection("totalWaste" + this.uid).doc(+this.today[0] + this.monthList[+this.today[0]-1]).update(total)
       }
       else {
-        this.db.collection("totalWaste" + this.uid).doc(this.monthList[+this.today[0]-1]).set(total)
+        this.db.collection("totalWaste" + this.uid).doc(+this.today[0] + this.monthList[+this.today[0]-1]).set(total)
       }
    })
   }
@@ -109,7 +110,8 @@ export class WasteService implements OnInit {
     let months = this.db.collection('totalWasteveWj2VNOz5RFoX1lGl4TWEQaXGq1')
     return months.ref.get().then(snap =>{
       snap.docs.forEach(doc => {
-        monthDocs.push(doc.id)
+        let substr = doc.id.substr(1)
+        monthDocs.push(substr)
         totalDocs.push(doc.data().totalCost)   
       })
       return {monthDocs, totalDocs}

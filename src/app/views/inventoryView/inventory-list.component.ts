@@ -117,7 +117,6 @@ export class InventoryListComponent implements OnInit{
   }
 
   saveItem(){
-    //make cost required
     if(this.itemName && this.itemBarcode && this.expiryDate !== null){
       let costOfOne = +this.cost/+this.quantity
       let item = {
@@ -142,7 +141,6 @@ export class InventoryListComponent implements OnInit{
     }
   }
   updateItem(item, id){
-    console.log("updating to " + item.quantity)
     if(item.isEditable){
       item.isEditable = false;
     } 
@@ -160,6 +158,9 @@ export class InventoryListComponent implements OnInit{
     }
     if(item.quality == undefined){
       item.quality = item.data.quality
+    }
+    if(item.quantity == undefined){
+      item.quantity = item.data.quantity
     }
     if(item.needsReorder == undefined){
       item.needsReorder = false
@@ -221,7 +222,8 @@ export class InventoryListComponent implements OnInit{
     let exptime = new Date(exp).getTime();
     let currentDate = new Date().getTime();
     let diff = exptime - currentDate
-    let days = Math.round(Math.abs(diff/(1000*60*60*24)))
+    let days = Math.round((diff/(1000*60*60*24)))
+    console.log("days " + item.itemName + " " + days)
     if (days > 29){
       item.quality = "Great"
       this.inventoryServ.updateItem(item, id)
@@ -236,7 +238,7 @@ export class InventoryListComponent implements OnInit{
       this.inventoryServ.updateItem(item, id)
 
     }
-    else if (days < 10){
+    else if (days < 10 && days > 0){
       item.quality = "Bad"
       this.inventoryServ.updateItem(item, id)
     }

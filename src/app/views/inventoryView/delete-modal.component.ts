@@ -52,15 +52,15 @@ import {InventoryService} from '../../services/inventory.service';
         item.needsReorder = true;
         let data = {item, ItemID}
         this.notify.emit(data);
-        // console.log("reorder" + this.needsReorder)
       }
+      console.log("reorder " + item.needsReorder)
       this.waste.createWasteDoc(item, wasteQuant, type, cost);
       let doc = this.db.collection('inventory' + this.uid).doc(ItemID).update({
         "quantity": newAmount,
+        "needsReorder": item.needsReorder
       });
     }
     removeQuant(item, itemID, quant){
-      console.log("quant is " + quant)
       if(+item.quantity <= quant || +item.quantity == 0){
         this.deleteItem(itemID);
         return
@@ -71,7 +71,6 @@ import {InventoryService} from '../../services/inventory.service';
         let data = {item, itemID}
         this.notify.emit(data);
       }
-      console.log("quality is " + item.quality)
       let newDoc = {
         itemBarcode: item.itemBarcode,
         itemName: item.itemName,
@@ -86,7 +85,6 @@ import {InventoryService} from '../../services/inventory.service';
         qntType: item.type,
         
       }
-      console.log("item quant is now " + newDoc.quantity)
       this.inventoryServ.updateItem(newDoc, itemID)
 
     }

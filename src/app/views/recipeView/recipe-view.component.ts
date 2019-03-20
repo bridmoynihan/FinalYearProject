@@ -15,7 +15,7 @@ import * as _ from 'lodash';
   export class RecipeViewComponent implements OnInit {
     public recipeList = [];
     public items;
-    private requestString = "https://thingproxy.freeboard.io/fetch/http://www.recipepuppy.com/api/?i=" 
+    private requestString = "https://cors-anywhere.herokuapp.com/http://www.recipepuppy.com/api/?i=" 
     public ingredientList = []
     constructor(public inventServ: InventoryService, public http: Http){}
 

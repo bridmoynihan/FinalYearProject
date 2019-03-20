@@ -26,8 +26,7 @@ export class AuthService {
     private _angularFirestore: AngularFirestore,
     private router: Router
   ) {
-
-    // get auth data && firestore doc else null
+    
   this.user = this._firebaseAuth.authState.pipe(
     switchMap(user => {
       if (user) {
