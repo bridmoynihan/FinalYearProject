@@ -15,6 +15,7 @@ import * as _ from 'lodash';
   export class RecipeViewComponent implements OnInit {
     public recipeList = [];
     public items;
+    public itemsTrue: boolean;
     private requestString = "https://cors-anywhere.herokuapp.com/http://www.recipepuppy.com/api/?i=" 
     public ingredientList = []
     constructor(public inventServ: InventoryService, public http: Http){}
@@ -28,6 +29,13 @@ import * as _ from 'lodash';
     return this.http.get(this.requestString).map(data => data.json().results)
   }
 
+  itemsExist(){
+    if(this.items != undefined ){
+      console.log("items true!")
+      this.itemsTrue = true;
+    }
+  }
+
 
   ngOnInit() {
     let ingredList = []
@@ -37,6 +45,7 @@ import * as _ from 'lodash';
           ingredList.push(doc.itemName)
         })
         this.items = this.getRecipeList(ingredList)
+        this.itemsExist();
       })
   }
      

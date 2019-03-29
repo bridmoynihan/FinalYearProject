@@ -19,7 +19,7 @@ export class InventoryFormComponent implements OnInit {
   quantity?: string;
   qntType?: string;
   cost?: string;
-  quality?: string; //set to good initially but as current is greater than or equal to expiry date then it turns to bad
+  quality?: string;
   reorder?: number;
   public editMode: boolean = true;
   itemToEdit: any = {};
@@ -35,7 +35,7 @@ export class InventoryFormComponent implements OnInit {
   saveItem(){
     if(this.itemName && this.itemBarcode && this.expiryDate && this.cost && this.reorder && this.quantity !== null){
       let costOfOne = +this.cost/+this.quantity
-      console.log("cost of one " + costOfOne)
+      
       let item = {
        itemBarcode: this.itemBarcode,
        itemName: this.itemName,

@@ -23,6 +23,7 @@ import { DeleteModalComponent } from './delete-modal.component';
 export class InventoryListComponent implements OnInit{
   public inventoryTrue: boolean;
   public barCode: string;
+  public days: number;
   uid: string;
   docRef: Observable<any[]>;
   items: Observable<any[]>;
@@ -45,6 +46,7 @@ export class InventoryListComponent implements OnInit{
   editMode: boolean = false;
   itemToEdit: any = {};
   public selectedItem: any;
+  public data
 
   onNotify(data:any):void {
     data.item.needsReorder = true;
@@ -65,15 +67,24 @@ export class InventoryListComponent implements OnInit{
   }
 
   ngOnInit(): any {
+  
     this.items = this.db.collection('inventory' + this.uid).snapshotChanges().pipe(
     map(actions => {
        return actions.map(a => {
          const data = a.payload.doc.data() as Item;
          const id = a.payload.doc.id;
-         return { id, data };
+        //  this.itemsList.push(data)
+         return {id, data};
        });
+       
     }));
-    
+    this.items.subscribe(
+      data => {
+        this.data = data
+        return this.data
+      }
+      
+    )
     this.inventoryExists();
 
     let docList: any[]
@@ -132,6 +143,7 @@ export class InventoryListComponent implements OnInit{
        cost: this.cost,
        quality: this.quality,
        reorder: this.reorder,
+       originalQuant: this.quantity,
        needsReorder: this.needsReorder,
        costOfOne: costOfOne
       };
@@ -163,7 +175,10 @@ export class InventoryListComponent implements OnInit{
       item.quantity = item.data.quantity
     }
     if(item.needsReorder == undefined){
-      item.needsReorder = false
+      item.needsReorder = item.data.needsReorder
+    }
+    if(item.originalQuant == undefined){
+      item.originalQuant = item.data.originalQuant
     }
     let update = {
       itemBarcode: item.itemBarcode,
@@ -172,7 +187,8 @@ export class InventoryListComponent implements OnInit{
       location: item.location,
       quantity: item.quantity,
       quality: item.quality,
-      needsReorder: this.needsReorder
+      originalQuant: item.originalQuant,
+      needsReorder: item.needsReorder
     }
     this.qualityCheck(update, id);
     this.inventoryServ.updateItem(update, id);
@@ -222,27 +238,26 @@ export class InventoryListComponent implements OnInit{
     let exptime = new Date(exp).getTime();
     let currentDate = new Date().getTime();
     let diff = exptime - currentDate
-    let days = Math.round((diff/(1000*60*60*24)))
-    console.log("days " + item.itemName + " " + days)
-    if (days > 29){
+    this.days = Math.round((diff/(1000*60*60*24)))
+    if (this.days > 29){
       item.quality = "Great"
       this.inventoryServ.updateItem(item, id)
     }
-    else if (days >= 15){
+    else if (this.days >= 15){
       item.quality = "Ok"
       this.inventoryServ.updateItem(item, id)
 
     }
-    else if (days >= 10){
+    else if (this.days >= 3){
       item.quality = "Average"
       this.inventoryServ.updateItem(item, id)
 
     }
-    else if (days < 10 && days > 0){
+    else if (this.days < 3 && this.days > 0){
       item.quality = "Bad"
       this.inventoryServ.updateItem(item, id)
     }
-    else if (days <= 0){
+    else if (this.days <= 0){
       item.quality = "Expired"
       this.inventoryServ.updateItem(item, id)
     }

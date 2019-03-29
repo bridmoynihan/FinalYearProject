@@ -53,11 +53,11 @@ import {InventoryService} from '../../services/inventory.service';
         let data = {item, ItemID}
         this.notify.emit(data);
       }
-      console.log("reorder " + item.needsReorder)
       this.waste.createWasteDoc(item, wasteQuant, type, cost);
       let doc = this.db.collection('inventory' + this.uid).doc(ItemID).update({
         "quantity": newAmount,
-        "needsReorder": item.needsReorder
+        "needsReorder": item.needsReorder,
+        "originalQuant":item.originalQuant
       });
     }
     removeQuant(item, itemID, quant){
@@ -79,6 +79,7 @@ import {InventoryService} from '../../services/inventory.service';
         locationBarcode: item.locationBarcode,
         reorder: item.reorder,
         needsReorder: item.needsReorder,
+        originalQuant: item.originalQuant,
         quality: item.quality,
         cost: item.cost,
         quantity: newAmount,

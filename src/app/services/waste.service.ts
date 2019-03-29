@@ -108,7 +108,8 @@ export class WasteService implements OnInit {
   getMonths(){
     let monthDocs = []
     let totalDocs = []
-    let months = this.db.collection('totalWasteveWj2VNOz5RFoX1lGl4TWEQaXGq1')
+
+    let months = this.db.collection('totalWaste' + this.uid)
     return months.ref.get().then(snap =>{
       snap.docs.forEach(doc => {
         let substr = doc.id.substr(1)
@@ -125,23 +126,24 @@ export class WasteService implements OnInit {
     let qntList = []
     let costList = []
     let titleQntOrig = []
-    this.wastes = this.db.collection<Waste>('wasteveWj2VNOz5RFoX1lGl4TWEQaXGq1')
-    console.log("is uid defined " + this.uid)
-    return this.wastes.ref.get().then(
-      snap => {
-        snap.docs.forEach(doc => {
-          amountList.push(doc.data().amount)
-          costList.push([doc.data().cost, doc.data().entryDate])
-          qntList.push([doc.data().amount, doc.data().qntType, doc.data().entryDate])
-          titleQntOrig.push([doc.data().itemName, doc.data().amount, doc.data().originalQuant, doc.data().qntType])
+    return this.inventoryServ.getUID().then(result => {
+    this.uid = String(result)
+      this.wastes = this.db.collection<Waste>('waste' + this.uid)
+      return this.wastes.ref.get().then(
+        snap => {
+          snap.docs.forEach(doc => {
+            amountList.push(doc.data().amount)
+            costList.push([doc.data().cost, doc.data().entryDate])
+            qntList.push([doc.data().amount, doc.data().qntType, doc.data().entryDate])
+            titleQntOrig.push([doc.data().itemName, doc.data().amount, doc.data().originalQuant, doc.data().qntType])
 
+          });
+          return {amountList, costList, qntList, titleQntOrig} ;  
         });
-        return {amountList, costList, qntList, titleQntOrig} ;  
-      });
+      })
     }
 
     getWasteItem(){
-      console.log("uid" + this.uid)
       return this.wasteItems = this.db.collection('waste' + this.uid).snapshotChanges().pipe(
         map(actions => {
           return actions.map( doc => {
@@ -158,7 +160,6 @@ export class WasteService implements OnInit {
       this.uid = String(result)
       return this.uid
     });
-
     this.getData().then(docs => {
       this.generateTotals(docs)
     })

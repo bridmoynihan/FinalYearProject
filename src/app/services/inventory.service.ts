@@ -54,7 +54,6 @@ export class InventoryService implements OnInit {
   inventoryExists(barcode): any {
     return this.getUID().then(result => {
       this.uid = String(result)
-      console.log(this.uid);
       const docRef = this.db.collection('inventory' + this.uid).doc(barcode)
 
       return docRef.ref.get().then(doc => {
@@ -75,7 +74,6 @@ export class InventoryService implements OnInit {
   }
 
   updateItem(update, docID){
-    console.log("2 updating to " + update.quantity)  
     this.itemDoc = this.db.doc<Item>('inventory' + this.uid + `/${docID}`)
     this.itemDoc.update({
       itemName: update.itemName,
@@ -119,7 +117,6 @@ export class InventoryService implements OnInit {
     .get().then(snapShot => {
       snapShot.docs.forEach(doc => {
         this.barCode = doc.id
-        console.log("id" + this.barCode)
         resolve(this.barCode)
       })
     });

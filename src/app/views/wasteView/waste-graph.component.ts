@@ -39,6 +39,7 @@ export class WasteGraphComponent {
                monthList.push(data.monthDocs[x])
                totalList.push(data.totalDocs[x])
            }
+           console.log(totalList)
            return {monthList, totalList} 
         })
     }

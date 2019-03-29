@@ -35,6 +35,7 @@
     "@types/plotly.js": "^1.44.0",
     "angular-plotly.js": "^1.1.0",
     "angular2-carousel": "^1.0.16",
+    "angular2-datatable": "^0.6.0",
     "angular2-fontawesome": "^5.2.1",
     "angularfire2": "^5.1.1",
     "bootstrap": "^4.3.1",

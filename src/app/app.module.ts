@@ -33,6 +33,8 @@ import { AuthGuardService } from './services/auth-guard.service';
 import {InventoryService} from './services/inventory.service';
 import {WasteService} from './services/waste.service';
 import { PlotlyModule } from 'angular-plotly.js';
+import {DataTableModule} from 'angular2-datatable'
+
 
 @NgModule({
   declarations: [
@@ -51,6 +53,7 @@ import { PlotlyModule } from 'angular-plotly.js';
   ],
   imports: [
     BrowserModule,
+    DataTableModule,
     FormsModule,
     HttpModule,
     AppRoutingModule,

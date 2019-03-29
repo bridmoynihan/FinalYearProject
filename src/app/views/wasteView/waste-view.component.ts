@@ -12,6 +12,7 @@ import { Observable } from 'rxjs';
 
   export class WasteViewComponent implements OnInit {
     public graph 
+    public wasteTrue: boolean;
     wasteItems: Observable<any[]>
     kgAmount: number
     gramsAmount: number
@@ -20,6 +21,7 @@ import { Observable } from 'rxjs';
     dataList: Observable<any[]>
     keyValue = 0
     public dict = []
+    public wasteData;
     constructor(public wasteServ: WasteService){
         this.setGraph(this.kgAmount, this.gramsAmount, this.lbsAmount, this.ltrsAmount)
         this.getTitles();
@@ -59,14 +61,12 @@ import { Observable } from 'rxjs';
       let amount = []
       let orig = []
       this.wasteServ.getData().then(result => {
-        console.log(result.titleQntOrig);
         for(let x = 0 ; x< result.titleQntOrig.length; x++){
           titles.push(result.titleQntOrig[x][0])
           amount.push(result.titleQntOrig[x][1])
           orig.push(result.titleQntOrig[x][2])
         }
         var uniqueItems = Array.from(new Set(titles))
-        console.log(uniqueItems);
         for(let i = 0; i<uniqueItems.length; i++){
           this.dict.push({
             key: uniqueItems[i],
@@ -80,15 +80,25 @@ import { Observable } from 'rxjs';
             }
           }
         }
-        console.log(this.dict[0].value[1]);
       })
+    }
+
+    wasteExists(){
+      if(this.wasteItems != undefined){
+        this.wasteTrue = true;
+      }
     }
 
     ngOnInit(){
       this.wasteItems = this.wasteServ.getWasteItem()
+      this.wasteItems.subscribe(data => {
+        this.wasteData = data;
+        return this.wasteData
+      })
       this.wasteServ.getData().then(docs =>{
         let today = new Date().toLocaleString()
       this.getAmounts(docs.qntList)
     })
+    this.wasteExists();
     }
 }
