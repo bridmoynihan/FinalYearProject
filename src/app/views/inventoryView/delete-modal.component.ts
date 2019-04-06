@@ -10,7 +10,10 @@ import { InventoryService } from '../../services/inventory.service';
   templateUrl: 'delete-modal.component.html',
   styleUrls: ['./delete-modal.component.css']
 })
+
+// Delete modal class opens deletion modal and provides functionality surrounding generating waste and updating item quantity
 export class DeleteModalComponent {
+  // Gets item and item id input passed from parent component 
   @Input() Item: Item;
   @Input() ItemID: string;
   closeResult: string;
@@ -18,6 +21,7 @@ export class DeleteModalComponent {
   wasteQuant: number;
   needsReorder: boolean = false
 
+  // Outputs notification to parent component when item reorder is true
   @Output() notify: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(private modalService: NgbModal, public inventoryServ: InventoryService, public db: AngularFirestore, public waste: WasteService) {
@@ -27,6 +31,7 @@ export class DeleteModalComponent {
     })
   }
 
+  // Opens deletion modal
   open(content) {
     this.modalService.open(content, {
       windowClass: 'dark-modal',
@@ -37,9 +42,14 @@ export class DeleteModalComponent {
 
   }
 
+  // Deletes item with no waste associated
   deleteItem(docID) {
     this.inventoryServ.deleteItem(docID);
   }
+  // Adds item to waste. Checks if current quantity is less than the amount trying to be wasted or if current quantity is zero
+  // If true item is deleted from inventory and appropriate amount wasted is added to waste document
+  // If new item quantity is equal to or less than the reorder level of that item a notification is sent to 
+  // the parent component
   addToWaste(item, ItemID, wasteQuant, type, cost) {
     if (+item.quantity <= wasteQuant || + item.quantity == 0) {
       this.deleteItem(ItemID);
@@ -60,6 +70,8 @@ export class DeleteModalComponent {
       "originalQuant": item.originalQuant
     });
   }
+
+  // Removes quanity from item without waste and checks if reorder level has been reached.
   removeQuant(item, itemID, quant) {
     if (+item.quantity <= quant || +item.quantity == 0) {
       this.deleteItem(itemID);

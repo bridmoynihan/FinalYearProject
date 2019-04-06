@@ -9,6 +9,8 @@ import { InventoryService } from '../../../services/inventory.service'
   templateUrl: './inventory-form.component.html',
   styleUrls: ['./inventory-form.component.css', '../../navbar/navbar.component.css']
 })
+
+// Inventory form class saves items created on inventory form view 
 export class InventoryFormComponent implements OnInit {
   itemBarcode: string;
   itemName: string;
@@ -31,7 +33,8 @@ export class InventoryFormComponent implements OnInit {
   constructor(public router: Router, public inventoryService: InventoryService) {
 
   }
-
+// Check if item name, barcode, expiry date, cost, reorder level and quantity exist. If this fails required 
+// form fields are highlighted
   saveItem() {
     if (this.itemName && this.itemBarcode && this.expiryDate && this.cost && this.reorder && this.quantity !== null) {
       let costOfOne = +this.cost / +this.quantity

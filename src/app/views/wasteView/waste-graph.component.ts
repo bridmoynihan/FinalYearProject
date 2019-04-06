@@ -9,6 +9,8 @@ import { exists } from 'fs';
     templateUrl: './waste-graph.component.html',
     styleUrls: ['./waste-graph.component.css']
 })
+// Implements the waste graph functionality
+// Uses waste service functions to access firebase documents and collections as graph input
 export class WasteGraphComponent {
     public graph
     constructor(public wasteServ: WasteService) {
@@ -24,13 +26,15 @@ export class WasteGraphComponent {
         });
     }
 
+    // Configures graph data and layout
     setGraph(xList, yList) {
         this.graph = {
             data: [{ x: xList, y: yList, type: 'bar', marker: { color: '#ff8c00' } }],
             layout: { width: 1020, height: 720, title: "Waste Graph:€ Wasted Per Month", margin: 'auto' }
         }
     }
-
+// Fetches total monthly waste documents from total waste Firebase collection
+// Cost and Month are used as input for the graph
     getMonthDocs() {
         return this.wasteServ.getMonths().then(data => {
             let monthList = []

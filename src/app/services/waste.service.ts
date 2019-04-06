@@ -7,6 +7,9 @@ import { Observable } from 'rxjs';
 import { InventoryService } from '../services/inventory.service';
 
 @Injectable()
+
+// Waste Service provides Firebase functionality for the creation, deletion and reading of Firebase documents.
+// 
 export class WasteService implements OnInit {
 
   itemDoc: AngularFirestoreDocument<Waste>;
@@ -36,6 +39,9 @@ export class WasteService implements OnInit {
       this.generateTotals(docs)
     })
   }
+  // Creation of waste document. Called when inventory item is wasted using the delete modal
+  // Entry date of waste item is recorded along with the cost of the waste amount
+  // Month is assigned to the current month by indexing month list with current month - 1
   createWasteDoc(item, amount, type, cost) {
     let dateStr = new Date().toLocaleString()
     let index = dateStr.indexOf(", ")
@@ -55,6 +61,7 @@ export class WasteService implements OnInit {
     let docRef = this.db.collection<Waste>('waste' + this.uid).add(waste)
   }
 
+  //Total monthly waste document creation
   createTotalDoc(total) {
 
     let totalDoc = this.db.collection("totalWaste" + this.uid).doc(+this.today[0] + this.monthList[+this.today[0] - 1]).ref.get().then(snap => {
@@ -66,7 +73,7 @@ export class WasteService implements OnInit {
       }
     })
   }
-
+  // Used to calculate the total monthly waste based on units
   generateTotals(docs) {
     this.kgAmount = 0
     this.gramsAmount = 0
@@ -105,6 +112,7 @@ export class WasteService implements OnInit {
 
   }
 
+  // Fetch months and total costs in total monthly waste collection
   getMonths() {
     let monthDocs = []
     let totalDocs = []
@@ -120,7 +128,8 @@ export class WasteService implements OnInit {
     })
   }
 
-
+// Fetch quantity, cost, original quantities from waste collection to be used to create amount pie chart
+// and order adjustments.
   getData() {
     let amountList = []
     let qntList = []
@@ -143,6 +152,7 @@ export class WasteService implements OnInit {
     })
   }
 
+  // Fetch all waste items and ids from waste collection
   getWasteItem() {
     return this.wasteItems = this.db.collection('waste' + this.uid).snapshotChanges().pipe(
       map(actions => {
@@ -155,6 +165,7 @@ export class WasteService implements OnInit {
     )
   }
 
+  // Get user's UID to be used to access Firebase collections.
   ngOnInit(): any {
     this.inventoryServ.getUID().then(result => {
       this.uid = String(result)

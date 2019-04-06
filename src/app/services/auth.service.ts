@@ -7,6 +7,9 @@ import { switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { auth } from 'firebase';
 
+
+// Auth Service provides sign in functionality using Google and log out.
+
 interface User {
   uid: string;
   email: string;
@@ -36,10 +39,12 @@ export class AuthService {
       })
     )
   }
+  // Starts sign in and passes Google provider to oAuth Login
   signInWithGoogle() {
     const provider = new auth.GoogleAuthProvider();
     return this.oAuthLogin(provider);
   }
+  //Opens modal pop up to signin with Google, passes access token to update
   private oAuthLogin(provider) {
     return this._firebaseAuth.auth.signInWithPopup(provider)
       .then((credential) => {
@@ -49,7 +54,7 @@ export class AuthService {
   logout() {
     this._firebaseAuth.auth.signOut().then((res) => this.router.navigate(['/welcome']));
   }
-
+// Updates Firestore Document with uid (User Identification)
   private updateUserDetails(user) {
     const userRef: AngularFirestoreDocument<any> = this._angularFirestore.doc('users/' + user.uid);
 

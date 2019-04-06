@@ -6,6 +6,8 @@ import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs'
 
 @Injectable()
+
+// Implements Firebase functionality for the creation, updating, reading and deletion of Inventory items
 export class InventoryService implements OnInit {
   items: AngularFirestoreCollection<Item>;
   itemDoc: AngularFirestoreDocument<Item>;
@@ -29,6 +31,7 @@ export class InventoryService implements OnInit {
 
   }
 
+  // Fetches and returns inventory items from user's inventory
   displayInventoryList(barcode): any {
     const docs = []
     const docRef = this.db.collection('inventory' + this.uid).ref.get()
@@ -40,7 +43,7 @@ export class InventoryService implements OnInit {
 
     return docs;
   }
-
+  // Creates inventory collection in Firebase
   createInventory(barcode, entryDate) {
     const docRef = this.db.collection('inventory' + this.uid).doc(barcode)
     docRef.set({ creationDate: entryDate }, { merge: true }).then(function () {
@@ -50,7 +53,7 @@ export class InventoryService implements OnInit {
         console.error("Error writing document: ", error);
       });
   }
-
+// Checks if inventory document exists based on boolean returned 
   inventoryExists(barcode): any {
     return this.getUID().then(result => {
       this.uid = String(result)
@@ -68,11 +71,11 @@ export class InventoryService implements OnInit {
       });
     });
   }
-
+// Add items to Firebase document
   addItem(item) {
     this.items.add(item);
   }
-
+// Update items in Firebase inventory collection.
   updateItem(update, docID) {
     this.itemDoc = this.db.doc<Item>('inventory' + this.uid + `/${docID}`)
     this.itemDoc.update({
@@ -86,6 +89,7 @@ export class InventoryService implements OnInit {
     });
 
   }
+  // Delete documents in Firebase inventory collection
   deleteItem(barcode) {
     this.itemDoc = this.items.doc(barcode)
     this.itemDoc.delete().then(function () {
@@ -94,6 +98,7 @@ export class InventoryService implements OnInit {
     });;
   }
 
+  // Returns all documents that have a quality field value of 'Bad'
   getBadItemsRef() {
     return this.db.collection<Item>('inventory' + this.uid, reference => reference.where('quality', '==', 'Bad')).valueChanges()
   }
