@@ -63,7 +63,7 @@ export class SentryErrorHandler implements ErrorHandler {
     InventoryListComponent,
     WasteGraphComponent,
     WasteViewComponent,
-    InventoryEditComponent,  //can remove this
+    InventoryEditComponent,
     DeleteModalComponent,
     RecipeViewComponent
   

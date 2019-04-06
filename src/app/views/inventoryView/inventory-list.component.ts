@@ -20,6 +20,9 @@ import { DeleteModalComponent } from './delete-modal.component';
   styleUrls: ['./inventory-list.component.css'],
 })
 
+// Inventory Component provides Firebase functionality that require
+// Firebase documents to be created, updated, read and deleted using Inventory Service
+
 export class InventoryListComponent implements OnInit {
   public inventoryTrue: boolean;
   public barCode: string;
@@ -48,6 +51,9 @@ export class InventoryListComponent implements OnInit {
   public selectedItem: any;
   public data
 
+  // Receives notifications from child component
+  // Sets reorder value on current item to True
+  // Updates item document in Firebase
   onNotify(data: any): void {
     data.item.needsReorder = true;
     this.updateItem(data.item, data.ItemID)
@@ -66,6 +72,9 @@ export class InventoryListComponent implements OnInit {
 
   }
 
+  // Collects items from firebase inventory collection on component load.
+  // Checks if inventory exists for user
+  // Runs quality check on all fetched items
   ngOnInit(): any {
 
     this.items = this.db.collection('inventory' + this.uid).snapshotChanges().pipe(
@@ -104,6 +113,7 @@ export class InventoryListComponent implements OnInit {
     })
   }
 
+  // Function to check if inventory exists for user.
   inventoryExists() {
 
     if (this.items != undefined) {
@@ -111,21 +121,27 @@ export class InventoryListComponent implements OnInit {
     }
   }
 
+  // Updates item's reorder boolean to true
   setReorder(item) {
     item.item.reorder = true;
     this.updateItem(item.item, item.ItemID)
     return;
   }
 
+  // Navigate to inventory form view
   gotoForm() {
     this.router.navigateByUrl('inventory-form')
   }
 
+  // Make inventory item in table list editable
+  // Converts table row into text input
   setEdit(item, bool) {
     item.data.isEditable = bool;
 
   }
 
+  // Called when edited item is saved
+  // Runs quality check on new item
   saveItem() {
     if (this.itemName && this.itemBarcode && this.expiryDate !== null) {
       let costOfOne = +this.cost / +this.quantity
@@ -151,6 +167,8 @@ export class InventoryListComponent implements OnInit {
       }
     }
   }
+  // Updates item sets editable boolean to false again so item converts back into table row.
+  // Updates Firebase document and runs quality check on updated item
   updateItem(item, id) {
     if (item.isEditable) {
       item.isEditable = false;
@@ -193,9 +211,11 @@ export class InventoryListComponent implements OnInit {
     this.inventoryServ.updateItem(update, id);
   }
 
+  // Deletes item from inventory
   deleteItem(docID) {
     this.inventoryServ.deleteItem(docID);
   }
+  // Creates waste document 
   addToWaste(item, amount, type, cost) {
     if (+item.data.quantity <= amount || +item.data.quantity == 0) {
       this.deleteItem(item.id);
@@ -209,19 +229,7 @@ export class InventoryListComponent implements OnInit {
       "quantity": newAmount,
     });
   }
-
-  checkReorder() { }
-
-  getBarcode() {
-    return this.inventoryServ.getBarcode().then(result => {
-      this.barCode = String(result);
-      this.inventoryServ.inventoryExists(this.barCode).then(ans => {
-        this.inventoryTrue = ans;
-      });
-    })
-
-  }
-
+  // Get items from firebase inventory collection to be displayed on inventory table
   displayInventoryList() {
     var doclist
     this.inventoryServ.getBarcode().then(result => {
@@ -232,6 +240,10 @@ export class InventoryListComponent implements OnInit {
   inventoryButtonClick() {
     this.router.navigateByUrl('/inventory-form');
   }
+
+  // Runs a quality check on items
+  // Subtracts current date from expiry date and converts difference to days
+  // Checks the amount of days and applies appropriate quality tag
   qualityCheck(item, id) {
     let exp = item.expiryDate
     let exptime = new Date(exp).getTime();
@@ -261,4 +273,15 @@ export class InventoryListComponent implements OnInit {
       this.inventoryServ.updateItem(item, id)
     }
   }
+
+  getBarcode() {
+    return this.inventoryServ.getBarcode().then(result => {
+      this.barCode = String(result);
+      this.inventoryServ.inventoryExists(this.barCode).then(ans => {
+        this.inventoryTrue = ans;
+      });
+    })
+
+  }
+
 }

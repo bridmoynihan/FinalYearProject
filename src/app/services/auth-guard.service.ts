@@ -4,12 +4,15 @@ import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from
 import { Observable } from 'rxjs';
 import { map, take, tap } from 'rxjs/operators';
 
+// Authentication Service implements CanActivate interface to apply guard to routes. 
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuardService implements CanActivate {
 
   constructor(private router: Router, private authService: AuthService) { }
+  //Check's if user is logged in, if not any attempt to route to another view will result in a redirect back to the welcome view.
   canActivate(next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> {
     return this.authService.user.pipe(
@@ -17,7 +20,6 @@ export class AuthGuardService implements CanActivate {
       map(user => !!user),
       tap(loggedIn => {
         if (!loggedIn) {
-          console.log('unauthenticated user attempting to access dashboard')
           this.router.navigate(['/welcome']);
         }
       }))

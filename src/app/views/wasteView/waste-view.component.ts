@@ -10,6 +10,9 @@ import { Observable } from 'rxjs';
   styleUrls: ['./waste-view.component.css']
 })
 
+// Implements Pie chart graph and order adjustments
+// Using waste service functions to check for document existence & retrieve data 
+
 export class WasteViewComponent implements OnInit {
   public graph
   public wasteTrue: boolean;
@@ -27,6 +30,7 @@ export class WasteViewComponent implements OnInit {
     this.getTitles();
 
   }
+  // Creates and configures pie chart
   setGraph(kgAmount, gramsAmount, lbsAmount, ltrsAmount) {
     this.graph = {
       data: [{ values: [this.kgAmount, this.gramsAmount, this.lbsAmount, this.ltrsAmount], labels: ["Kilogram Wasted", "Grams Wasted", "Pounds Wasted", "Liters Wasted"], type: 'pie' }],
@@ -34,6 +38,7 @@ export class WasteViewComponent implements OnInit {
     }
   }
 
+  // Calculate total units wasted
   getAmounts(list) {
     this.kgAmount = 0
     this.gramsAmount = 0
@@ -56,6 +61,7 @@ export class WasteViewComponent implements OnInit {
     this.setGraph(this.kgAmount, this.gramsAmount, this.lbsAmount, this.ltrsAmount)
   }
 
+  // Arrays used in order ajustments. Uses item title, quanity wasted and original quanity recorded to adjust next order
   getTitles() {
     let titles = []
     let amount = []
@@ -83,6 +89,7 @@ export class WasteViewComponent implements OnInit {
     })
   }
 
+  // Checks if waste collection exists for user
   wasteExists() {
     if (this.wasteItems != undefined) {
       this.wasteTrue = true;
