@@ -1,9 +1,9 @@
 import { Item } from './../views/inventoryView/item.model';
-import {Injectable, OnInit} from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { AngularFireAuth } from 'angularfire2/auth';
-import {map} from 'rxjs/operators';
-import {Observable} from 'rxjs'
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs'
 
 @Injectable()
 export class InventoryService implements OnInit {
@@ -11,7 +11,7 @@ export class InventoryService implements OnInit {
   itemDoc: AngularFirestoreDocument<Item>;
   uid: string;
   ingredList = []
- 
+
   private CollectRef: AngularFirestoreCollection<Item>;
   barCode: string;
 
@@ -25,30 +25,30 @@ export class InventoryService implements OnInit {
         }
       }
     );
-    
+
 
   }
 
   displayInventoryList(barcode): any {
     const docs = []
-   const docRef = this.db.collection('inventory'+ this.uid).ref.get()
-   .then(function(querySnapshot){
-     querySnapshot.forEach(function(doc){
-       docs.push(doc.data());
-     })
-   })
-  
-   return docs;
+    const docRef = this.db.collection('inventory' + this.uid).ref.get()
+      .then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          docs.push(doc.data());
+        })
+      })
+
+    return docs;
   }
 
-  createInventory(barcode, entryDate){
+  createInventory(barcode, entryDate) {
     const docRef = this.db.collection('inventory' + this.uid).doc(barcode)
-    docRef.set({creationDate: entryDate}, { merge: true }).then(function() {
+    docRef.set({ creationDate: entryDate }, { merge: true }).then(function () {
       console.log("Inventory Successfully created");
     })
-    .catch(function(error) {
-      console.error("Error writing document: ", error);
-    });
+      .catch(function (error) {
+        console.error("Error writing document: ", error);
+      });
   }
 
   inventoryExists(barcode): any {
@@ -57,23 +57,23 @@ export class InventoryService implements OnInit {
       const docRef = this.db.collection('inventory' + this.uid).doc(barcode)
 
       return docRef.ref.get().then(doc => {
-          if (doc.exists) {
-            return true;
-          } else {
-            return false;
-          }
+        if (doc.exists) {
+          return true;
+        } else {
+          return false;
         }
-      ).catch(function(error) {
+      }
+      ).catch(function (error) {
         console.log('Error getting document: ', error);
       });
     });
   }
 
-  addItem(item){
+  addItem(item) {
     this.items.add(item);
   }
 
-  updateItem(update, docID){
+  updateItem(update, docID) {
     this.itemDoc = this.db.doc<Item>('inventory' + this.uid + `/${docID}`)
     this.itemDoc.update({
       itemName: update.itemName,
@@ -84,47 +84,47 @@ export class InventoryService implements OnInit {
       quantity: update.quantity,
       needsReorder: update.needsReorder
     });
-    
+
   }
-  deleteItem(barcode){
+  deleteItem(barcode) {
     this.itemDoc = this.items.doc(barcode)
-    this.itemDoc.delete().then(function() {
-  }).catch(function(error) {
+    this.itemDoc.delete().then(function () {
+    }).catch(function (error) {
       console.error("Error removing document: ", error);
-  });;
+    });;
   }
 
-  getBadItemsRef(){
+  getBadItemsRef() {
     return this.db.collection<Item>('inventory' + this.uid, reference => reference.where('quality', '==', 'Bad')).valueChanges()
   }
 
-  getUID(){
+  getUID() {
     var promise = new Promise(resolve => {
       this.afAuth.authState.subscribe(
-          user => {
-            if (user) {
-              this.uid = user.uid;
-              resolve(this.uid);
-            }
+        user => {
+          if (user) {
+            this.uid = user.uid;
+            resolve(this.uid);
           }
-        );
+        }
+      );
     });
     return promise;
   }
-  getBarcode(){
+  getBarcode() {
     var promise = new Promise(resolve => {
-    const CollectRef = this.db.collection('inventory' + this.uid).ref
-    .get().then(snapShot => {
-      snapShot.docs.forEach(doc => {
-        this.barCode = doc.id
-        resolve(this.barCode)
-      })
-    });
-  })
-  return promise;
-      
+      const CollectRef = this.db.collection('inventory' + this.uid).ref
+        .get().then(snapShot => {
+          snapShot.docs.forEach(doc => {
+            this.barCode = doc.id
+            resolve(this.barCode)
+          })
+        });
+    })
+    return promise;
 
-    }
+
+  }
 
   ngOnInit(): any {
 

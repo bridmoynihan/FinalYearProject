@@ -1,73 +1,89 @@
 <app-navbar></app-navbar>
 
-  <div class="container">
-    <div *ngIf="!inventoryTrue">
-      <h1 class="display-4">We've noticed you haven't created an inventory yet.</h1>
-      <p class="lead">Click here to create your first inventory system!</p>
-      <button type="button" class="btn btn-dark" (click)="getBarcode()">Create your first Inventory</button>
-    </div>
-    <div *ngIf="inventoryTrue">
-      <button type="button" class="add btn btn-dark addbtn" (click)="gotoForm()">Add another Item</button>
-      <table class="table table-striped table-dark table-hover" [mfData]="data" #mf="mfDataTable" [mfRowsOnPage]="7">
-        <thead>
-          <tr>
-            <th scope="col">Barcode</th>
-            <th scope="col"><mfDefaultSorter by="data.itemName">Name</mfDefaultSorter></th>
-            <th scope="col"><mfDefaultSorter by="data.expiryDate">Expiry</mfDefaultSorter></th>
-            <th scope="col"><mfDefaultSorter by="data.location">Location</mfDefaultSorter></th>
-            <th scope="col"><mfDefaultSorter by="data.cost">Cost</mfDefaultSorter></th>
-            <th scope="col"><mfDefaultSorter by="data.quantity">Quantity</mfDefaultSorter></th>
-            <th scope="col"><mfDefaultSorter by="data.quality">Status</mfDefaultSorter></th>
-            <th scope="col">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of mf.data">
-            <td *ngIf="item.data.isEditable">
-              <input style="width:80px" class="textInput" type="text" [(ngModel)]="item.data.itemBarcode" placeholder={{item.data.itemBarcode}}>
-            </td>
-            <td *ngIf="!item.data.isEditable">{{item.data.itemBarcode}}</td>
-            <td *ngIf="item.data.isEditable">
-              <input style="width:80px" class="textInput" type="text" [(ngModel)]="item.data.itemName" placeholder={{item.data.itemName}}>
-            </td>
-            <td *ngIf="!item.data.isEditable">{{item.data.itemName}}</td>
-            <td *ngIf="item.data.isEditable">
-              <input style="width:80px" type="text" [(ngModel)]="item.data.expiryDate" placeholder={{item.data.expiryDate}}>
-            </td>
-            <td *ngIf="!item.data.isEditable">{{item.data.expiryDate}}</td>
-            <td *ngIf="item.data.isEditable">
-              <input style="width:80px" type="text" [(ngModel)]="item.data.location" placeholder={{item.data.location}}>
-            </td>
-            <td *ngIf="!item.data.isEditable">{{item.data.location}}</td>
-            <td *ngIf="item.data.isEditable">
-              <input style="width:80px" type="text" [(ngModel)]="item.data.cost" placeholder={{item.data.cost}}>
-            </td>
-            <td *ngIf="!item.data.isEditable">{{item.data.cost | currency:'EUR':true}}</td>
-            <td>{{item.data.quantity}}</td>
-            <td><span class="badge badge-pill badge-warning">{{item.data.quality}}</span><span *ngIf="item.data.needsReorder" class="badge badge-pill badge-info">{{this.reorderText}}</span></td>
-            <td>
-              <div *ngIf="item.data.isEditable">
-                <button class="btn btn-success" (click)="updateItem(item, item.id)">
-                  <i class="fa fa-save"></i>
-                </button>
-                <button class="btn btn-danger setFalse" (click)="setEdit(item, false)">
-                    <i class="fa fa-close"></i>
-                  </button>
-              </div>
-              <span class="btnGroup">
-              <div style="height: 30px;" *ngIf="!item.data.isEditable">
-              <button class="btn btn-success setTrue" (click)="setEdit(item, true)">
-                <i class="fa fa-edit"></i>
-              </button>
-              <app-delete-modal (notify)='onNotify($event)' [Item]="item.data" [ItemID]="item.id"></app-delete-modal>
-            </div>
-          </span> 
-            </td>
-            
-          </tr>
-        </tbody>
-        <mfBootstrapPaginator></mfBootstrapPaginator>
-      </table>
-    </div>
+<div class="container">
+  <div *ngIf="!inventoryTrue">
+    <h1 class="display-4">We've noticed you haven't created an inventory yet.</h1>
+    <p class="lead">Click here to create your first inventory system!</p>
+    <button type="button" class="btn btn-dark" (click)="getBarcode()">Create your first Inventory</button>
   </div>
-  <div>
+  <div *ngIf="inventoryTrue">
+    <button type="button" class="add btn btn-dark addbtn" (click)="gotoForm()">Add another Item</button>
+    <table class="table table-striped table-dark table-hover" [mfData]="data" #mf="mfDataTable" [mfRowsOnPage]="7">
+      <thead>
+        <tr>
+          <th scope="col">Barcode</th>
+          <th scope="col">
+            <mfDefaultSorter by="data.itemName">Name</mfDefaultSorter>
+          </th>
+          <th scope="col">
+            <mfDefaultSorter by="data.expiryDate">Expiry</mfDefaultSorter>
+          </th>
+          <th scope="col">
+            <mfDefaultSorter by="data.location">Location</mfDefaultSorter>
+          </th>
+          <th scope="col">
+            <mfDefaultSorter by="data.cost">Cost</mfDefaultSorter>
+          </th>
+          <th scope="col">
+            <mfDefaultSorter by="data.quantity">Quantity</mfDefaultSorter>
+          </th>
+          <th scope="col">
+            <mfDefaultSorter by="data.quality">Status</mfDefaultSorter>
+          </th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of mf.data">
+          <td *ngIf="item.data.isEditable">
+            <input style="width:80px" class="textInput" type="text" [(ngModel)]="item.data.itemBarcode"
+              placeholder={{item.data.itemBarcode}}>
+          </td>
+          <td *ngIf="!item.data.isEditable">{{item.data.itemBarcode}}</td>
+          <td *ngIf="item.data.isEditable">
+            <input style="width:80px" class="textInput" type="text" [(ngModel)]="item.data.itemName"
+              placeholder={{item.data.itemName}}>
+          </td>
+          <td *ngIf="!item.data.isEditable">{{item.data.itemName}}</td>
+          <td *ngIf="item.data.isEditable">
+            <input style="width:80px" type="text" [(ngModel)]="item.data.expiryDate"
+              placeholder={{item.data.expiryDate}}>
+          </td>
+          <td *ngIf="!item.data.isEditable">{{item.data.expiryDate}}</td>
+          <td *ngIf="item.data.isEditable">
+            <input style="width:80px" type="text" [(ngModel)]="item.data.location" placeholder={{item.data.location}}>
+          </td>
+          <td *ngIf="!item.data.isEditable">{{item.data.location}}</td>
+          <td *ngIf="item.data.isEditable">
+            <input style="width:80px" type="text" [(ngModel)]="item.data.cost" placeholder={{item.data.cost}}>
+          </td>
+          <td *ngIf="!item.data.isEditable">{{item.data.cost | currency:'EUR':true}}</td>
+          <td>{{item.data.quantity}}</td>
+          <td><span class="badge badge-pill badge-warning">{{item.data.quality}}</span><span
+              *ngIf="item.data.needsReorder" class="badge badge-pill badge-info">{{this.reorderText}}</span></td>
+          <td>
+            <div *ngIf="item.data.isEditable">
+              <button class="btn btn-success" (click)="updateItem(item, item.id)">
+                <i class="fa fa-save"></i>
+              </button>
+              <button class="btn btn-danger setFalse" (click)="setEdit(item, false)">
+                <i class="fa fa-close"></i>
+              </button>
+            </div>
+            <span class="btnGroup">
+              <div style="height: 30px;" *ngIf="!item.data.isEditable">
+                <button class="btn btn-success setTrue" (click)="setEdit(item, true)">
+                  <i class="fa fa-edit"></i>
+                </button>
+                <app-delete-modal (notify)='onNotify($event)' [Item]="item.data" [ItemID]="item.id"></app-delete-modal>
+              </div>
+            </span>
+          </td>
+
+        </tr>
+      </tbody>
+      <mfBootstrapPaginator></mfBootstrapPaginator>
+    </table>
+  </div>
+</div>
+<div>

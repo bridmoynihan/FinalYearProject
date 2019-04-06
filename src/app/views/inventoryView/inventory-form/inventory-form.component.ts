@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthService} from '../../../services/auth.service';
-import {Router} from '@angular/router';
-import {InventoryService} from '../../../services/inventory.service'
+import { AuthService } from '../../../services/auth.service';
+import { Router } from '@angular/router';
+import { InventoryService } from '../../../services/inventory.service'
 
 
 @Component({
@@ -26,51 +26,51 @@ export class InventoryFormComponent implements OnInit {
 
   needsReorder: boolean = false;
   validForm: boolean;
-  entryDate: number= Date.now();
+  entryDate: number = Date.now();
 
   constructor(public router: Router, public inventoryService: InventoryService) {
-    
-   }
 
-  saveItem(){
-    if(this.itemName && this.itemBarcode && this.expiryDate && this.cost && this.reorder && this.quantity !== null){
-      let costOfOne = +this.cost/+this.quantity
-      
+  }
+
+  saveItem() {
+    if (this.itemName && this.itemBarcode && this.expiryDate && this.cost && this.reorder && this.quantity !== null) {
+      let costOfOne = +this.cost / +this.quantity
+
       let item = {
-       itemBarcode: this.itemBarcode,
-       itemName: this.itemName,
-       expiryDate: this.expiryDate,
-       location: String(this.location),
-       locationBarcode: String(this.locationBarcode),
-       vendor: String(this.vendor),
-       quantity: String(this.quantity),
-       qntType: String(this.qntType),
-       cost: String(this.cost),
-       quality: String(this.quality),
-       reorder: this.reorder,
-       needsReorder: false,
-       originalQuant: String(this.quantity),
-       costOfOne: costOfOne
+        itemBarcode: this.itemBarcode,
+        itemName: this.itemName,
+        expiryDate: this.expiryDate,
+        location: String(this.location),
+        locationBarcode: String(this.locationBarcode),
+        vendor: String(this.vendor),
+        quantity: String(this.quantity),
+        qntType: String(this.qntType),
+        cost: String(this.cost),
+        quality: String(this.quality),
+        reorder: this.reorder,
+        needsReorder: false,
+        originalQuant: String(this.quantity),
+        costOfOne: costOfOne
       };
-        this.inventoryService.addItem(item)
-        this.validForm = true;
-      }
-      this.itemBarcode = ""
-       this.itemName = ""
-       this.expiryDate = null 
-       this.location = ""
-       this.locationBarcode = ""
-       this.vendor = ""
-       this.quantity = ""
-       this.qntType = ""
-      this.cost = ""
-      this.quality = ""
-      this.reorder = null
+      this.inventoryService.addItem(item)
+      this.validForm = true;
     }
+    this.itemBarcode = ""
+    this.itemName = ""
+    this.expiryDate = null
+    this.location = ""
+    this.locationBarcode = ""
+    this.vendor = ""
+    this.quantity = ""
+    this.qntType = ""
+    this.cost = ""
+    this.quality = ""
+    this.reorder = null
+  }
 
-    closeItem(){
-      this.router.navigateByUrl('/inventory-list')
-    }
+  closeItem() {
+    this.router.navigateByUrl('/inventory-list')
+  }
 
   ngOnInit() {
   }

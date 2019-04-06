@@ -1,20 +1,20 @@
 <app-navbar></app-navbar>
 <div *ngIf="!itemsTrue">
     <h3>There are no items close to expiry yet. Check again tomorrow!</h3>
-      
+
 </div>
-<div *ngIf ="itemsTrue">
-<div class="app flex-row align-items-center">
-    <div class ="container">
-    <div class = "row">
-    <div *ngFor="let data of items | async;" class="card col-md-4" style="width: 18rem;">
-        <div class="card-body">
-            <h5 class="card-title">{{data.title}}</h5>
-            <p class="card-text">{{data.ingredients}}</p>
-            <a href="{{data.href}}" class="btn btn-primary">Check out the Recipe!</a>
-        </div>
-        </div>
+<div *ngIf="itemsTrue">
+    <div class="app flex-row align-items-center">
+        <div class="container">
+            <div class="row">
+                <div *ngFor="let data of items | async;" class="card col-md-4" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{data.title}}</h5>
+                        <p class="card-text">{{data.ingredients}}</p>
+                        <a href="{{data.href}}" class="btn btn-primary">Check out the Recipe!</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
 </div>

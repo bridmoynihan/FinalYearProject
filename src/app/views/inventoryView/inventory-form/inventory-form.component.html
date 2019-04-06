@@ -1,68 +1,75 @@
 <app-navbar></app-navbar>
 <div class="container">
-<div *ngIf="this.validForm">
-<div class="alert alert-success" role="alert">
-  Item has been added to the inventory, you can continue to add more!
-</div>
-</div>
-<div class="card">
-  <div class="card-body">
-    <form ngNoForm>
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="inputItemBarcode">Item Barcode</label>
-          <input type="text" class="form-control" id="inputItemBarcode" [(ngModel)]="itemBarcode" placeholder="975685776" required="required">
-    
-        </div>
-        <div class="form-group col-md-6">
-          <label for="inputName">Item Name</label>
-          <input type="text" class="form-control" id="inputName" [(ngModel)]="itemName" placeholder="Pork Loin" required="required">
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="inputLocation">Location</label>
-        <input type="text" class="form-control" id="inputLocation" [(ngModel)]="location" placeholder="Freezer 1">
-      </div>
-      <div class="form-group">
-        <label for="inputLocationBarcode">Location Barcode</label>
-        <input type="text" class="form-control" id="inputLocationBarcode" [(ngModel)]="locationBarcode" placeholder="15672859">
-      </div>
-      <div class="form-group">
-        <label for="inputExpiryDate">Expiry Date</label>
-        <input type="date" class="form-control" id="inputExpiryDate" [(ngModel)]="expiryDate" placeholder="02/09/19" required="required">
-      </div>
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="inputVendor">Vendor</label>
-          <input type="text" class="form-control" id="inputVendor" [(ngModel)]="vendor" placeholder="Moynihan Butchers">
-        </div>
-        <div class="form-group col-md-4">
-          <label for="inputQuantity">Quantity</label>
-          <input type="text" class="form-control" id="inputQuantity" [(ngModel)]="quantity" placeholder="10" required="required">
-        </div>
-        <div class="form-group col-md-4">
-            <label for="inputQuantity">Reorder Point</label>
-            <input type="text" class="form-control" id="inputReorder" [(ngModel)]="reorder" placeholder="5" required="required">
+  <div *ngIf="this.validForm">
+    <div class="alert alert-success" role="alert">
+      Item has been added to the inventory, you can continue to add more!
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <form ngNoForm>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="inputItemBarcode">Item Barcode</label>
+            <input type="text" class="form-control" id="inputItemBarcode" [(ngModel)]="itemBarcode"
+              placeholder="975685776" required="required">
+
           </div>
-        <div class="form-group col-md-2">
-          <label for="inputType">Unit</label>
-          <select id="inputType" [(ngModel)]="qntType" class="form-control" required="required">
-            <option selected>Choose Quantity Type...</option>
-            <option>kgs</option>
-            <option>grams</option>
-            <option>lbs</option>
-            <option>ltrs</option>
-            <option>unit</option>
-          </select>
+          <div class="form-group col-md-6">
+            <label for="inputName">Item Name</label>
+            <input type="text" class="form-control" id="inputName" [(ngModel)]="itemName" placeholder="Pork Loin"
+              required="required">
+          </div>
         </div>
         <div class="form-group">
-          <label for="inputCost">Cost</label>
-          <input type="number" class="form-control" id="inputCost" [(ngModel)]="cost" required="required">
+          <label for="inputLocation">Location</label>
+          <input type="text" class="form-control" id="inputLocation" [(ngModel)]="location" placeholder="Freezer 1">
         </div>
-      </div>
-      <button type="button" class="add btn btn-primary" (click)="saveItem()"> Add Item to Inventory</button>
-      <button type="button" class="cancel btn btn-secondary" (click)="closeItem()"> Cancel</button>
-    </form>
+        <div class="form-group">
+          <label for="inputLocationBarcode">Location Barcode</label>
+          <input type="text" class="form-control" id="inputLocationBarcode" [(ngModel)]="locationBarcode"
+            placeholder="15672859">
+        </div>
+        <div class="form-group">
+          <label for="inputExpiryDate">Expiry Date</label>
+          <input type="date" class="form-control" id="inputExpiryDate" [(ngModel)]="expiryDate" placeholder="02/09/19"
+            required="required">
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="inputVendor">Vendor</label>
+            <input type="text" class="form-control" id="inputVendor" [(ngModel)]="vendor"
+              placeholder="Moynihan Butchers">
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputQuantity">Quantity</label>
+            <input type="text" class="form-control" id="inputQuantity" [(ngModel)]="quantity" placeholder="10"
+              required="required">
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputQuantity">Reorder Point</label>
+            <input type="text" class="form-control" id="inputReorder" [(ngModel)]="reorder" placeholder="5"
+              required="required">
+          </div>
+          <div class="form-group col-md-2">
+            <label for="inputType">Unit</label>
+            <select id="inputType" [(ngModel)]="qntType" class="form-control" required="required">
+              <option selected>Choose Quantity Type...</option>
+              <option>kgs</option>
+              <option>grams</option>
+              <option>lbs</option>
+              <option>ltrs</option>
+              <option>unit</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="inputCost">Cost</label>
+            <input type="number" class="form-control" id="inputCost" [(ngModel)]="cost" required="required">
+          </div>
+        </div>
+        <button type="button" class="add btn btn-primary" (click)="saveItem()"> Add Item to Inventory</button>
+        <button type="button" class="cancel btn btn-secondary" (click)="closeItem()"> Cancel</button>
+      </form>
+    </div>
   </div>
-</div>
 </div>
