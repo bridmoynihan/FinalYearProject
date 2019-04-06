@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, Injectable } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AngularFireModule } from 'angularfire2';
@@ -34,6 +34,23 @@ import {InventoryService} from './services/inventory.service';
 import {WasteService} from './services/waste.service';
 import { PlotlyModule } from 'angular-plotly.js';
 import {DataTableModule} from 'angular2-datatable'
+import * as Sentry from '@sentry/browser'
+import { ErrorHandler } from '@angular/core';
+
+
+Sentry.init({
+  dsn: "https://cff94c6a08024d74b5f4bd37321fe0a6@sentry.io/1426962"
+});
+
+@Injectable()
+export class SentryErrorHandler implements ErrorHandler {
+  constructor() {}
+  handleError(error) {
+    Sentry.captureException(error.originalError || error);
+    throw error;
+  }
+}
+
 
 
 @NgModule({
@@ -70,7 +87,7 @@ import {DataTableModule} from 'angular2-datatable'
     PlotlyModule
   ],
   entryComponents: [DeleteModalComponent],
-  providers: [AuthService, AuthGuardService, InventoryService, WasteService],
+  providers: [AuthService, AuthGuardService, InventoryService, WasteService, { provide: ErrorHandler, useClass: SentryErrorHandler }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
